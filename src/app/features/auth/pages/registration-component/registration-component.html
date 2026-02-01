@@ -1,0 +1,243 @@
+<div class="min-h-screen flex flex-col lg:flex-row font-display bg-background-light text-text-main">
+  <!-- Left Panel - Form -->
+  <div class="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-12 lg:px-20 xl:px-32 py-10 lg:py-8 overflow-y-auto bg-white">
+    <!-- Logo -->
+    <div class="flex items-center gap-3 mb-10">
+      <div class="size-8 text-primary">
+        <svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+        </svg>
+      </div>
+      <span class="text-xl font-bold tracking-tight text-text-main">StylistMarket</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="w-full max-w-lg mx-auto lg:mx-0">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl lg:text-4xl font-bold leading-tight tracking-tight mb-3 text-text-main">
+          Rejoignez l'élite du style
+        </h1>
+        <p class="text-text-muted text-base">
+          Trouvez et réservez les meilleurs stylistes ou proposez vos services.
+        </p>
+      </div>
+
+      <!-- Role Selection -->
+      <div class="mb-8">
+        <p class="text-sm font-semibold mb-3 text-text-main">
+          Je souhaite m'inscrire en tant que :
+        </p>
+        <div class="grid grid-cols-2 gap-4">
+          <label class="group relative cursor-pointer" (click)="selectRole('client')">
+            <input 
+              type="radio" 
+              name="role" 
+              value="client" 
+              [checked]="selectedRole === 'client'"
+              class="peer sr-only"
+            />
+            <div class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-700 transition-all hover:bg-slate-50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary peer-checked:bg-primary/5">
+              <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+              <span class="font-medium text-sm">Client</span>
+            </div>
+          </label>
+          <label class="group relative cursor-pointer" (click)="selectRole('stylist')">
+            <input 
+              type="radio" 
+              name="role" 
+              value="stylist"
+              [checked]="selectedRole === 'stylist'"
+              class="peer sr-only"
+            />
+            <div class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-700 transition-all hover:bg-slate-50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary peer-checked:bg-primary/5">
+              <span class="material-symbols-outlined text-[20px]">styler</span>
+              <span class="font-medium text-sm">Styliste</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Registration Form -->
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="space-y-5">
+        <!-- First Name & Last Name -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <div class="flex-1 space-y-2">
+            <label for="firstname" class="text-sm font-medium leading-none text-text-main">
+              Prénom
+            </label>
+            <input
+              id="firstname"
+              type="text"
+              formControlName="firstName"
+              placeholder="Votre prénom"
+              class="flex h-12 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
+              [class.border-red-500]="registrationForm.get('firstName')?.invalid && registrationForm.get('firstName')?.touched"
+            />
+          </div>
+          <div class="flex-1 space-y-2">
+            <label for="lastname" class="text-sm font-medium leading-none text-text-main">
+              Nom
+            </label>
+            <input
+              id="lastname"
+              type="text"
+              formControlName="lastName"
+              placeholder="Votre nom"
+              class="flex h-12 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
+              [class.border-red-500]="registrationForm.get('lastName')?.invalid && registrationForm.get('lastName')?.touched"
+            />
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="space-y-2">
+          <label for="email" class="text-sm font-medium leading-none text-text-main">
+            Adresse e-mail
+          </label>
+          <div class="relative">
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="exemple@email.com"
+              class="flex h-12 w-full rounded-lg border border-slate-300 bg-white pl-10 pr-3 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
+              [class.border-red-500]="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched"
+            />
+            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 text-[20px]">mail</span>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="space-y-2">
+          <label for="password" class="text-sm font-medium leading-none text-text-main">
+            Mot de passe
+          </label>
+          <div class="relative">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="••••••••"
+              class="flex h-12 w-full rounded-lg border border-slate-300 bg-white pl-10 pr-10 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
+              [class.border-red-500]="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched"
+            />
+            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 text-[20px]">lock</span>
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="absolute right-3 top-3 text-slate-400 hover:text-slate-600"
+            >
+              <span class="material-symbols-outlined text-[20px]">
+                {{ showPassword ? 'visibility_off' : 'visibility' }}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="space-y-2">
+          <label for="confirm-password" class="text-sm font-medium leading-none text-text-main">
+            Confirmer le mot de passe
+          </label>
+          <div class="relative">
+            <input
+              id="confirm-password"
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              placeholder="••••••••"
+              class="flex h-12 w-full rounded-lg border border-slate-300 bg-white pl-10 pr-10 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
+              [class.border-red-500]="registrationForm.get('confirmPassword')?.invalid && registrationForm.get('confirmPassword')?.touched"
+            />
+            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 text-[20px]">lock_reset</span>
+            <button
+              type="button"
+              (click)="toggleConfirmPasswordVisibility()"
+              class="absolute right-3 top-3 text-slate-400 hover:text-slate-600"
+            >
+              <span class="material-symbols-outlined text-[20px]">
+                {{ showConfirmPassword ? 'visibility_off' : 'visibility' }}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="w-full flex items-center justify-center h-12 rounded-lg bg-primary hover:bg-primary-hover text-white text-base font-bold leading-normal transition-colors mt-6 shadow-lg shadow-primary/25"
+        >
+          S'inscrire
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="relative my-8">
+        <div class="absolute inset-0 flex items-center">
+          <span class="w-full border-t border-slate-300"></span>
+        </div>
+        <div class="relative flex justify-center text-xs uppercase">
+          <span class="bg-white px-2 text-text-muted font-medium">Ou continuer avec</span>
+        </div>
+      </div>
+
+      <!-- Social Login -->
+      <div class="grid grid-cols-2 gap-4">
+        <button
+          type="button"
+          (click)="signInWithGoogle()"
+          class="flex items-center justify-center gap-2 h-11 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 transition-colors text-sm font-medium text-text-main"
+        >
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3-bzbAR0MNpky8mkyfDD0cGRNmac7qBFRoLjdcZSCoUGVtkiP8KgRmU4gnHPx5AkKDbfdgOPyVh0mWyPwR-vABQXuQgCkYJ_pw1KC_c5_tTNNEiKO7TGXYUvLGx5Q_TgsfbZjU_g4zK0J3Fb8JzSLzg53tI3DQfv3NIZjYTY3IgpWycQqcOKdnY3YtA0fb4hbSxFW3379mdFJDEi_x-cl2I_WLr3WiJO7aVd_f9vHQjKV6Qi8jOvX-vuD0J_xT79lOtA6F6DamdqS"
+            alt="Google Logo"
+            class="w-5 h-5"
+          />
+          Google
+        </button>
+        <button
+          type="button"
+          (click)="signInWithApple()"
+          class="flex items-center justify-center gap-2 h-11 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 transition-colors text-sm font-medium text-text-main"
+        >
+          <span class="material-symbols-outlined text-[20px] text-slate-700">ios</span>
+          Apple
+        </button>
+      </div>
+
+      <!-- Sign In Link -->
+      <p class="text-center text-sm text-text-muted mt-8">
+        Vous avez déjà un compte ?
+        <a href="/login" class="font-bold text-primary hover:underline hover:text-primary-hover">
+          Se connecter
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Right Panel - Hero Image -->
+  <div class="hidden lg:block lg:w-1/2 relative bg-slate-100">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 z-10"></div>
+    <img
+      src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6D6xvgGN8DJYEUTF2d5FXUfoD95qBdAuvl5kP0o2HhaydEDnxrszANyEiZXQ6od0p2VAn08Vr7CLIIHNq3weraOQSMDgd7slq56xAhN_vmBRGHss370MGu1g8InRM-PH6m9LV7SMXA7jKWN1WbHfnPUMZS_e8uqupAMri-fT77xODCIaz6GkbSK7OPYrtYW8XdloCNQSNIhbPrGqHBbKb0_Fw035FWSLNUkvHCu2TbS3LIyGtNaNOVIeZYCx3O0qSYfEuEBYMRsBJ"
+      alt="Fashion Editorial"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+    <div class="absolute bottom-16 left-12 right-12 z-20">
+      <blockquote class="text-white max-w-md drop-shadow-md">
+        <p class="text-2xl font-bold leading-tight mb-4">
+          "Le style est une manière de dire qui vous êtes sans avoir à parler."
+        </p>
+        <footer class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm">
+            RC
+          </div>
+          <div class="flex flex-col">
+            <span class="text-sm font-semibold">Rachel Zoe</span>
+            <span class="text-xs text-white/80">Styliste de renommée</span>
+          </div>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</div>
