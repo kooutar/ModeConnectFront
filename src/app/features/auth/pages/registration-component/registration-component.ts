@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth-service';
+import { RegisterRequest } from '../../interfaces/RegistreRequest';
 
 @Component({
   selector: 'app-registration',
@@ -14,17 +16,21 @@ export class RegistrationComponent {
   selectedRole: string = 'client';
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+  
 
-  constructor(private fb: FormBuilder) {
-    this.registrationForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required],
-      role: ['client', Validators.required]
-    });
-  }
+constructor(
+  private fb: FormBuilder,
+  private authService: AuthService
+) {
+  this.registrationForm = this.fb.group({
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
+    confirmPassword: ['', Validators.required],
+    role: ['client', Validators.required]
+  });
+}
 
   selectRole(role: string): void {
     this.selectedRole = role;
@@ -42,7 +48,21 @@ export class RegistrationComponent {
   onSubmit(): void {
     if (this.registrationForm.valid) {
       console.log('Form submitted:', this.registrationForm.value);
-      // Handle form submission
+      // Call the register method from AuthService
+       const registerData: RegisterRequest = {
+      username: this.registrationForm.value.firstName + this.registrationForm.value.lastName, // ou une autre logique
+      email: this.registrationForm.value.email,
+      password: this.registrationForm.value.password,
+      role: this.registrationForm.value.role === 'client' ? 'ROLE_CLIENT' : 'ROLE_CREATOR'
+    };
+      this.authService.register(registerData).subscribe({
+      next: (response) => {
+        console.log('Registration successful:', response);
+      },
+      error: (error) => {
+        console.error('Registration failed:', error);
+      }
+    });
     } else {
       Object.keys(this.registrationForm.controls).forEach(key => {
         this.registrationForm.get(key)?.markAsTouched();

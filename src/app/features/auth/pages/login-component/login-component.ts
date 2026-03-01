@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-
+import {AuthService} from'../../services/auth-service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -12,12 +12,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 export class LoginComponent {
   loginForm: FormGroup;
   showPassword: boolean = false;
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder , private authService:AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(4)]]
     });
+    this.authService=authService;
   }
 
   togglePasswordVisibility(): void {
@@ -25,9 +25,18 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+    console.log('Submitting form...', this.loginForm.valid);
     if (this.loginForm.valid) {
       console.log('Form submitted:', this.loginForm.value);
-      // Handle login logic
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (response) => {
+          console.log('Login successful:', response);
+        },
+        error: (error) => {
+          console.error('Login failed:', error);
+        }
+      });
+
     } else {
       Object.keys(this.loginForm.controls).forEach(key => {
         this.loginForm.get(key)?.markAsTouched();
