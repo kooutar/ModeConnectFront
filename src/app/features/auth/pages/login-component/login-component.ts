@@ -1,23 +1,28 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import {AuthService} from'../../services/auth-service';
+import { AuthService } from '../../services/auth-service';
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login-component.html',
-  styleUrls: ['./login-component.css']
+  styleUrls: ['./login-component.css'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
   showPassword: boolean = false;
-  constructor(private fb: FormBuilder , private authService:AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]]
+      password: ['', [Validators.required, Validators.minLength(4)]],
     });
-    this.authService=authService;
+    this.authService = authService;
   }
 
   togglePasswordVisibility(): void {
@@ -31,14 +36,16 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           console.log('Login successful:', response);
+          localStorage.setItem('token', response.token);
+          this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           console.error('Login failed:', error);
-        }
+        },
       });
-
     } else {
-      Object.keys(this.loginForm.controls).forEach(key => {
+      console.log('Form is invalid. Please correct the errors and try again.');
+      Object.keys(this.loginForm.controls).forEach((key) => {
         this.loginForm.get(key)?.markAsTouched();
       });
     }

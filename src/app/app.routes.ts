@@ -3,6 +3,7 @@ import { RegistrationComponent } from './features/auth/pages/registration-compon
 import { LoginComponent } from './features/auth/pages/login-component/login-component';
 import { HomeComponent } from './features/home/pages/home-component/home-component';
 import { ClientDashboardComponent } from './features/client/pages/client-dashboard/client-dashboard';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -20,5 +21,6 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: ClientDashboardComponent,
+    canActivate: [authGuard],
   },
 ];
