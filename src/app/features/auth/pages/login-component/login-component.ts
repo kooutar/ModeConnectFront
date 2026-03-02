@@ -3,13 +3,12 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
-import { AuthService } from '../../services/auth-service';
+
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login-component.html',
-  styleUrls: ['./login-component.css'],
   styleUrls: ['./login-component.css'],
 })
 export class LoginComponent {
@@ -23,7 +22,6 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
       password: ['', [Validators.required, Validators.minLength(4)]],
     });
     this.authService = authService;
