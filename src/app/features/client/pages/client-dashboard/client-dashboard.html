@@ -1,0 +1,413 @@
+<div class="flex h-screen w-full overflow-hidden">
+  <aside
+    class="hidden w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-surface-dark lg:flex overflow-y-auto"
+  >
+    <div
+      class="flex flex-col items-center gap-4 p-8 border-b border-slate-200 dark:border-slate-800"
+    >
+      <div class="relative">
+        <div
+          class="size-20 rounded-full bg-cover bg-center border-2 border-primary p-0.5"
+          data-alt="Portrait of a smiling woman, the user Sophie Martin"
+          style="
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAkGzFCCQvwtBwi7yb77h1Cov3af4k-hNc-8r3bZLK_lsdrsooei-PPuopRHf18zas4xU4H8S7t-2jKHNiRrLAVzpmducA0Fy2LvFjLDbekA-x5axwkH-6AFRRr9jslroaBDi1FJzGfr-VfHLVXd7ynI-JyzdSSfnaCGAIylkrerbVnM-zsYEXS38sDJrfWNw6GYqPIsMU6P3nlJlbg4kzum2yFaSAh7OtZqJWRNx3wjo-ehReHqKUjVGG8_GRtmsepLaLMSfiyaGYK');
+          "
+        ></div>
+        <div
+          class="absolute bottom-0 right-0 size-5 rounded-full bg-green-500 border-2 border-surface-light dark:border-surface-dark"
+        ></div>
+      </div>
+      <div class="text-center">
+        <h2 class="text-lg font-bold leading-tight">Sophie Martin</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Membre Premium</p>
+      </div>
+    </div>
+    <nav class="flex-1 flex flex-col gap-2 p-4">
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-lg shadow-primary/25 transition-all"
+        href="#"
+      >
+        <span class="material-symbols-outlined fill">dashboard</span>
+        <span class="text-sm font-semibold">Tableau de bord</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+        href="#"
+      >
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+          >calendar_month</span
+        >
+        <span class="text-sm font-medium">Mes Réservations</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group justify-between"
+        href="#"
+      >
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+            >chat_bubble</span
+          >
+          <span class="text-sm font-medium">Messagerie</span>
+        </div>
+        <span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+        href="#"
+      >
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+          >favorite</span
+        >
+        <span class="text-sm font-medium">Favoris</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+        href="#"
+      >
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+          >person</span
+        >
+        <span class="text-sm font-medium">Mon Profil</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+        href="#"
+      >
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+          >settings</span
+        >
+        <span class="text-sm font-medium">Paramètres</span>
+      </a>
+    </nav>
+    <div class="p-4 mt-auto">
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-900/10 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+        href="#"
+      >
+        <span class="material-symbols-outlined">logout</span>
+        <span class="text-sm font-medium">Déconnexion</span>
+      </a>
+    </div>
+  </aside>
+  <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+    <header
+      class="lg:hidden flex items-center justify-between p-4 bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="size-10 rounded-full bg-cover bg-center"
+          data-alt="User profile picture"
+          style="
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5qSGI_5VRJyHkhIMegKihjFDuX33JOK1JLqVU3RWmzvAPte__jyayl2sz6SR0WHKSf74HfwvnxAk3IOfHxC3lMwq8xa9dVtb8ogaSO49S-P0vtrSyTy-wA90N7l8nilksNI6NvpVl-mBPORf0C98NqpQA64D_2HIZ3fIxHcF3XaR6mx4jGBaWOLtEtIQt8YTATx1ikfXHDTfSi1ZgAx6nDB7dDsr4avwzA2ozZ69xMT2W39j2gMTUGo0nqZV-ahKRseXCa2GUgsJr');
+          "
+        ></div>
+        <span class="font-bold text-lg">Tableau de Bord</span>
+      </div>
+      <button class="text-slate-600 dark:text-white">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </header>
+    <div class="flex-1 overflow-y-auto p-4 lg:p-10 scroll-smooth">
+      <div class="max-w-6xl mx-auto space-y-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h1 class="text-3xl lg:text-4xl font-black tracking-tight mb-2">Bonjour, Sophie 👋</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-lg">
+              Voici un aperçu de vos activités de stylisme aujourd'hui.
+            </p>
+          </div>
+          <button
+            class="hidden sm:flex items-center gap-2 bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 hover:border-primary text-slate-900 dark:text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-sm"
+          >
+            <span class="material-symbols-outlined text-[20px]">add_circle</span>
+            Nouvelle recherche
+          </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+          <div
+            class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4 group hover:border-primary/50 transition-colors"
+          >
+            <div
+              class="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform"
+            >
+              <span class="material-symbols-outlined text-3xl">event_upcoming</span>
+            </div>
+            <div>
+              <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">
+                Rendez-vous à venir
+              </p>
+              <p class="text-3xl font-bold mt-1">1</p>
+            </div>
+          </div>
+          <div
+            class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4 group hover:border-primary/50 transition-colors"
+          >
+            <div
+              class="size-14 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:scale-110 transition-transform"
+            >
+              <span class="material-symbols-outlined text-3xl">mark_chat_unread</span>
+            </div>
+            <div>
+              <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Messages non lus</p>
+              <p class="text-3xl font-bold mt-1">3</p>
+            </div>
+          </div>
+          <div
+            class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4 group hover:border-primary/50 transition-colors"
+          >
+            <div
+              class="size-14 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500 group-hover:scale-110 transition-transform"
+            >
+              <span class="material-symbols-outlined text-3xl">payments</span>
+            </div>
+            <div>
+              <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total dépensé</p>
+              <p class="text-3xl font-bold mt-1">450€</p>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-bold">Ma Prochaine Séance</h2>
+            <a class="text-primary text-sm font-semibold hover:underline" href="#"
+              >Voir le calendrier</a
+            >
+          </div>
+          <div
+            class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col md:flex-row"
+          >
+            <div
+              class="md:w-2/5 h-48 md:h-auto bg-cover bg-center relative group"
+              data-alt="Stylist consulting with a client in a modern studio setting"
+              style="
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBW5EI2vjTIFp6VHyCkG0yKfGTie8YQW6VoByXpLgB0CzaQ9RmFCFYrUoAuFTrhukITOiyzXWDzZx7A5tOgWwJylBX3rtTXWVooqpzAU5AbIVxW5ONugKAh-HVjwASIaxGindmmCY2GSDOFbh45XgzcFXCL7VYfIgp6jAgMPNm6XMYNgjObnwcOx3BO0aG0bew9SwMZJdD6bKqIpHnqpziWpIyxhOk0gsjr1DuzYgf3cPWWORx2AMMTsasCVmJgTVdsvgrn47sRtoA8');
+              "
+            >
+              <div
+                class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"
+              ></div>
+            </div>
+            <div class="p-6 md:p-8 flex flex-col justify-center flex-1 gap-4">
+              <div class="flex items-start justify-between">
+                <div class="flex items-center gap-2 mb-1">
+                  <span
+                    class="px-2.5 py-1 rounded-full bg-green-500/10 text-green-600 dark:text-green-400 text-xs font-bold uppercase tracking-wider"
+                    >Confirmé</span
+                  >
+                  <span
+                    class="px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 text-xs font-bold uppercase tracking-wider"
+                    >Relooking</span
+                  >
+                </div>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold mb-2">Relooking Complet avec Julie Dubois</h3>
+                <p class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-lg">
+                  Séance de 2 heures incluant l'analyse de colorimétrie et le tri de garde-robe.
+                  Préparez vos tenues préférées !
+                </p>
+              </div>
+              <div
+                class="flex flex-wrap items-center gap-6 mt-2 pt-6 border-t border-slate-200 dark:border-slate-800/50"
+              >
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary">calendar_today</span>
+                  <span class="font-semibold">Mercredi 24 Octobre</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-primary">schedule</span>
+                  <span class="font-semibold">14:00 - 16:00</span>
+                </div>
+                <div class="flex-1"></div>
+                <button
+                  class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2"
+                >
+                  Gérer la réservation
+                  <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between px-1">
+              <h2 class="text-xl font-bold">Messages Récents</h2>
+              <button
+                class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                <span class="material-symbols-outlined text-slate-500">more_horiz</span>
+              </button>
+            </div>
+            <div
+              class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden"
+            >
+              <div class="divide-y divide-slate-200 dark:divide-slate-800">
+                <div
+                  class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group"
+                >
+                  <div class="flex items-start gap-3">
+                    <div class="relative">
+                      <div
+                        class="size-10 rounded-full bg-cover bg-center"
+                        data-alt="Portrait of stylist Julie Dubois"
+                        style="
+                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDA9nVdmSpb7aN8mrFv3GT93XEYHpoAI0rQReroW3raMhlOry2JkEk7sQnciBTo12fE1j4lLmF64zrH_33_p2mQ_xEawygfM0lhf9TGweH19pGQmPOqaQuLnK0kR3lLm2m6DK55znVkFra5SGGV32T9cug3eM2IxI2Y81c3gcaBH2e9PmCs-nGLKHr9o6PTkzweKlOJNaQnP7INmVKVc1y42JT9MpyS7jIHNpJL-cD4hf7UvWlEKdhw4NIFTLHhhQ3RAxhAagTCOuy-');
+                        "
+                      ></div>
+                      <div
+                        class="absolute bottom-0 right-0 size-2.5 bg-green-500 border-2 border-white dark:border-surface-dark rounded-full"
+                      ></div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center justify-between mb-0.5">
+                        <h4 class="font-bold text-sm">Julie Dubois</h4>
+                        <span class="text-xs text-primary font-bold">14:02</span>
+                      </div>
+                      <p class="text-sm text-slate-600 dark:text-slate-300 truncate font-medium">
+                        J'ai hâte de vous voir mercredi ! N'oubl...
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group"
+                >
+                  <div class="flex items-start gap-3">
+                    <div class="relative">
+                      <div
+                        class="size-10 rounded-full bg-cover bg-center"
+                        data-alt="Portrait of stylist Marc Laurent"
+                        style="
+                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7WGIw4OKC3ZGWhoCSVbWCce_EpvBnqjxs5CTcfFcl-sQLj55N0aJk2g50MXjq7g5dfCZJqox8fTuRB6tLPmmMW1lmq513TkkQUEODuTHvnk-MgOpeNzPX6yUNXYR6sh3i1fz77QPklJYw5T0Ynn3yvbqsb8-Thzfy7tCyW0URI5d6PfI7ieQiCUQUprqTchKgeHqesDlT43WN3wTbNmQY87N-aCF6uM_MtnZwoALCQrn3wZ6tB_0_p51oVugMqpV_djGltzTbHLtY');
+                        "
+                      ></div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center justify-between mb-0.5">
+                        <h4 class="font-bold text-sm">Marc Laurent</h4>
+                        <span class="text-xs text-slate-500">Hier</span>
+                      </div>
+                      <p class="text-sm text-slate-500 dark:text-slate-400 truncate">
+                        Merci pour votre avis, c'était un plaisir...
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group"
+                >
+                  <div class="flex items-start gap-3">
+                    <div class="relative">
+                      <div
+                        class="size-10 rounded-full bg-cover bg-center"
+                        data-alt="Portrait of stylist Clara V."
+                        style="
+                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAk0k8wxh7skfj8xVjvlpv0tWgauxNU5pKqvYE94OqHBttEgxFzv6Q0tlaIFHNaWqa_eCKJ_UlrN3rZgdAmc3aXq-WfGAXL69RabdaBAJtpc5f5V1g8VgRQil62KNbbRcYKjfapoXjS_4F_OTUMKs9a_g5tVtaBqUkjxEq5VXYrxobvSr1MemR4pVhqUGztw_ifcQS0CUksusLB3vSdXZXcUxP6ivf90l4YXqKcllilcWTsJqWV9WMFaS66PAprd2egseysRZLqrJJq');
+                        "
+                      ></div>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center justify-between mb-0.5">
+                        <h4 class="font-bold text-sm">Clara V.</h4>
+                        <span class="text-xs text-slate-500">20 Oct</span>
+                      </div>
+                      <p class="text-sm text-slate-500 dark:text-slate-400 truncate">
+                        Les photos de la séance sont prêtes.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="p-3 bg-slate-50 dark:bg-slate-800/50 text-center border-t border-slate-200 dark:border-slate-800"
+              >
+                <button class="text-primary text-sm font-semibold hover:underline">
+                  Voir tous les messages
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between px-1">
+              <h2 class="text-xl font-bold">Historique Récent</h2>
+              <button
+                class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors"
+              >
+                <span class="material-symbols-outlined">filter_list</span>
+              </button>
+            </div>
+            <div class="flex flex-col gap-3">
+              <div
+                class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
+              >
+                <div
+                  class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-none"
+                >
+                  <span class="material-symbols-outlined text-slate-500">check_circle</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-bold text-sm truncate">Shopping Personnalisé</h4>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">
+                    15 Octobre • Avec Marc Laurent
+                  </p>
+                </div>
+                <div class="text-right">
+                  <p class="font-bold text-sm">150€</p>
+                  <p class="text-[10px] text-green-500 font-bold uppercase">Terminé</p>
+                </div>
+                <button class="text-slate-400 hover:text-primary">
+                  <span class="material-symbols-outlined text-[20px]">download</span>
+                </button>
+              </div>
+              <div
+                class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
+              >
+                <div
+                  class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-none"
+                >
+                  <span class="material-symbols-outlined text-slate-500">cancel</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-bold text-sm truncate">Audit Garde-robe</h4>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">
+                    10 Octobre • Avec Sarah K.
+                  </p>
+                </div>
+                <div class="text-right">
+                  <p class="font-bold text-sm">80€</p>
+                  <p class="text-[10px] text-red-500 font-bold uppercase">Annulé</p>
+                </div>
+                <button class="text-slate-400 hover:text-primary">
+                  <span class="material-symbols-outlined text-[20px]">info</span>
+                </button>
+              </div>
+              <div
+                class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
+              >
+                <div
+                  class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-none"
+                >
+                  <span class="material-symbols-outlined text-slate-500">star</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-bold text-sm truncate">Conseil en Image</h4>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">
+                    01 Octobre • Avec Julie Dubois
+                  </p>
+                </div>
+                <div class="text-right">
+                  <p class="font-bold text-sm">220€</p>
+                  <p class="text-[10px] text-green-500 font-bold uppercase">Terminé</p>
+                </div>
+                <button class="text-slate-400 hover:text-primary">
+                  <span class="material-symbols-outlined text-[20px]">download</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
