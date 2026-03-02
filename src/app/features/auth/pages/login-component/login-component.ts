@@ -44,12 +44,20 @@ export class LoginComponent {
         },
         error: (error) => {
           console.error('Login failed:', error);
-          // attempt to extract error message from backend response
-          if (error && error.error && error.error.message) {
-            this.errorMessage = error.error.message;
-          } else if (error && error.message) {
+          // attempt to extract a user-friendly message
+          if (error && error.error) {
+            // backend might send a message property or plain text
+            if (typeof error.error === 'string') {
+              this.errorMessage = error.error;
+            } else if (error.error.message) {
+              this.errorMessage = error.error.message;
+            }
+          }
+          // fallback to the generic HTTP message
+          if (!this.errorMessage && error && error.message) {
             this.errorMessage = error.message;
-          } else {
+          }
+          if (!this.errorMessage) {
             this.errorMessage = 'Une erreur est survenue lors de la connexion.';
           }
         },
@@ -71,4 +79,3 @@ export class LoginComponent {
     // Implement Apple OAuth
   }
 }
-
