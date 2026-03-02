@@ -69,6 +69,7 @@ export class RegistrationComponent {
           } else {
             this.errorMessage = "Une erreur est survenue lors de l'inscription.";
           }
+          alert(this.errorMessage);
         },
       });
     } else {

@@ -60,6 +60,8 @@ export class LoginComponent {
           if (!this.errorMessage) {
             this.errorMessage = 'Une erreur est survenue lors de la connexion.';
           }
+          // show an alert popup so user notices
+          alert(this.errorMessage);
         },
       });
     } else {

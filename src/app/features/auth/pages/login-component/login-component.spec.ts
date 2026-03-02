@@ -6,11 +6,17 @@ import { AuthService } from '../../services/auth-service';
 
 // stub AuthService using a simple function, no jasmine globals required
 
+declare const jasmine: any; // global provided by test runner
+declare const spyOn: any; // allow spyon usage in TS
+
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async () => {
+    // spy on alert so we can verify it's shown
+    spyOn(window, 'alert');
+
     // provide a fake AuthService so we can trigger errors
     const fakeAuth = {
       login: () =>
@@ -44,6 +50,7 @@ describe('LoginComponent', () => {
     expect(component.errorMessage).toBe('Mot de passe incorrect');
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Mot de passe incorrect');
+    expect(window.alert).toHaveBeenCalledWith('Mot de passe incorrect');
   });
 
   it('should fall back to error.message when no backend message provided', async () => {
@@ -64,5 +71,6 @@ describe('LoginComponent', () => {
     await fixture.whenStable();
 
     expect(component.errorMessage).toBe('Http failure response for http://localhost/api 404');
+    expect(window.alert).toHaveBeenCalledWith('Http failure response for http://localhost/api 404');
   });
 });
