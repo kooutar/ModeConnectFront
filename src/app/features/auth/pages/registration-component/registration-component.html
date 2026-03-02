@@ -1,11 +1,21 @@
 <div class="min-h-screen flex flex-col lg:flex-row font-display bg-background-light text-text-main">
   <!-- Left Panel - Form -->
-  <div class="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-12 lg:px-20 xl:px-32 py-10 lg:py-8 overflow-y-auto bg-white">
+  <div
+    class="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-12 lg:px-20 xl:px-32 py-10 lg:py-8 overflow-y-auto bg-white"
+  >
     <!-- Logo -->
     <div class="flex items-center gap-3 mb-10">
       <div class="size-8 text-primary">
-        <svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+        <svg
+          class="w-full h-full"
+          fill="none"
+          viewBox="0 0 48 48"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z"
+            fill="currentColor"
+          ></path>
         </svg>
       </div>
       <span class="text-xl font-bold tracking-tight text-text-main">StylistMarket</span>
@@ -24,33 +34,40 @@
       </div>
 
       <!-- Role Selection -->
+      <div *ngIf="errorMessage" class="mb-4 rounded-lg bg-red-100 p-3 text-red-800">
+        {{ errorMessage }}
+      </div>
       <div class="mb-8">
         <p class="text-sm font-semibold mb-3 text-text-main">
           Je souhaite m'inscrire en tant que :
         </p>
         <div class="grid grid-cols-2 gap-4">
           <label class="group relative cursor-pointer" (click)="selectRole('client')">
-            <input 
-              type="radio" 
-              name="role" 
-              value="client" 
+            <input
+              type="radio"
+              name="role"
+              value="client"
               [checked]="selectedRole === 'client'"
               class="peer sr-only"
             />
-            <div class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-700 transition-all hover:bg-slate-50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary peer-checked:bg-primary/5">
+            <div
+              class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-700 transition-all hover:bg-slate-50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary peer-checked:bg-primary/5"
+            >
               <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
               <span class="font-medium text-sm">Client</span>
             </div>
           </label>
           <label class="group relative cursor-pointer" (click)="selectRole('stylist')">
-            <input 
-              type="radio" 
-              name="role" 
+            <input
+              type="radio"
+              name="role"
               value="stylist"
               [checked]="selectedRole === 'stylist'"
               class="peer sr-only"
             />
-            <div class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-700 transition-all hover:bg-slate-50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary peer-checked:bg-primary/5">
+            <div
+              class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-700 transition-all hover:bg-slate-50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary peer-checked:bg-primary/5"
+            >
               <span class="material-symbols-outlined text-[20px]">styler</span>
               <span class="font-medium text-sm">Styliste</span>
             </div>
@@ -72,7 +89,10 @@
               formControlName="firstName"
               placeholder="Votre prénom"
               class="flex h-12 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
-              [class.border-red-500]="registrationForm.get('firstName')?.invalid && registrationForm.get('firstName')?.touched"
+              [class.border-red-500]="
+                registrationForm.get('firstName')?.invalid &&
+                registrationForm.get('firstName')?.touched
+              "
             />
           </div>
           <div class="flex-1 space-y-2">
@@ -85,7 +105,10 @@
               formControlName="lastName"
               placeholder="Votre nom"
               class="flex h-12 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
-              [class.border-red-500]="registrationForm.get('lastName')?.invalid && registrationForm.get('lastName')?.touched"
+              [class.border-red-500]="
+                registrationForm.get('lastName')?.invalid &&
+                registrationForm.get('lastName')?.touched
+              "
             />
           </div>
         </div>
@@ -102,9 +125,13 @@
               formControlName="email"
               placeholder="exemple@email.com"
               class="flex h-12 w-full rounded-lg border border-slate-300 bg-white pl-10 pr-3 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
-              [class.border-red-500]="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched"
+              [class.border-red-500]="
+                registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched
+              "
             />
-            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 text-[20px]">mail</span>
+            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 text-[20px]"
+              >mail</span
+            >
           </div>
         </div>
 
@@ -120,9 +147,14 @@
               formControlName="password"
               placeholder="••••••••"
               class="flex h-12 w-full rounded-lg border border-slate-300 bg-white pl-10 pr-10 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
-              [class.border-red-500]="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched"
+              [class.border-red-500]="
+                registrationForm.get('password')?.invalid &&
+                registrationForm.get('password')?.touched
+              "
             />
-            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 text-[20px]">lock</span>
+            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 text-[20px]"
+              >lock</span
+            >
             <button
               type="button"
               (click)="togglePasswordVisibility()"
@@ -147,9 +179,14 @@
               formControlName="confirmPassword"
               placeholder="••••••••"
               class="flex h-12 w-full rounded-lg border border-slate-300 bg-white pl-10 pr-10 py-2 text-sm text-text-main placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
-              [class.border-red-500]="registrationForm.get('confirmPassword')?.invalid && registrationForm.get('confirmPassword')?.touched"
+              [class.border-red-500]="
+                registrationForm.get('confirmPassword')?.invalid &&
+                registrationForm.get('confirmPassword')?.touched
+              "
             />
-            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 text-[20px]">lock_reset</span>
+            <span class="material-symbols-outlined absolute left-3 top-3 text-slate-400 text-[20px]"
+              >lock_reset</span
+            >
             <button
               type="button"
               (click)="toggleConfirmPasswordVisibility()"
@@ -217,7 +254,9 @@
 
   <!-- Right Panel - Hero Image -->
   <div class="hidden lg:block lg:w-1/2 relative bg-slate-100">
-    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 z-10"></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 z-10"
+    ></div>
     <img
       src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6D6xvgGN8DJYEUTF2d5FXUfoD95qBdAuvl5kP0o2HhaydEDnxrszANyEiZXQ6od0p2VAn08Vr7CLIIHNq3weraOQSMDgd7slq56xAhN_vmBRGHss370MGu1g8InRM-PH6m9LV7SMXA7jKWN1WbHfnPUMZS_e8uqupAMri-fT77xODCIaz6GkbSK7OPYrtYW8XdloCNQSNIhbPrGqHBbKb0_Fw035FWSLNUkvHCu2TbS3LIyGtNaNOVIeZYCx3O0qSYfEuEBYMRsBJ"
       alt="Fashion Editorial"
@@ -229,7 +268,9 @@
           "Le style est une manière de dire qui vous êtes sans avoir à parler."
         </p>
         <footer class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm">
+          <div
+            class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm"
+          >
             RC
           </div>
           <div class="flex flex-col">
