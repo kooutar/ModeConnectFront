@@ -1,0 +1,176 @@
+@if (true) {
+  <main class="main-container">
+    <div class="max-w-[1280px] mx-auto px-4 md:px-10 lg:px-20 py-8">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <button class="breadcrumb-link" routerLink="/models">Modèles</button>
+        <span class="material-symbols-outlined breadcrumb-icon">chevron_right</span>
+        <span class="breadcrumb-current">{{ model?.name || 'Détails du modèle' }}</span>
+      </nav>
+
+      <!-- Loading / Error / Empty states -->
+      <!-- <div *ngIf="loading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Chargement du modèle...</p>
+      </div> -->
+
+      <div
+        *ngIf="error && !loading"
+        class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+        style="border-radius: 12px"
+      >
+        <p class="text-red-800">{{ error }}</p>
+      </div>
+
+      <div *ngIf="!loading && !error && !model" class="text-center py-12">
+        <p class="text-gray-600">Aucune donnée à afficher pour ce modèle.</p>
+      </div>
+
+      <!-- Contenu principal -->
+      <div class="content-grid" *ngIf="!loading && !error && model">
+        <!-- Section Images -->
+        <div class="images-section" *ngIf="model as m">
+          <!-- Image principale -->
+          <div class="main-image-container">
+            <img
+              [src]="
+                m.mediaList.length
+                  ? baseImageUrl + m.mediaList[selectedImageIndex]?.mediaUrl
+                  : 'https://via.placeholder.com/600x700'
+              "
+              [alt]="m.name"
+              class="main-image"
+            />
+          </div>
+
+          <!-- Miniatures -->
+          <div class="thumbnails-grid" *ngIf="m.mediaList.length">
+            <button
+              *ngFor="let media of m.mediaList; let i = index"
+              (click)="selectImage(i)"
+              [class.thumbnail-active]="selectedImageIndex === i"
+              class="thumbnail-button"
+            >
+              <img [src]="baseImageUrl + media.mediaUrl" [alt]="m.name + ' ' + (i + 1)" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Section Détails -->
+        <div class="details-section" *ngIf="model as m">
+          <!-- En-tête -->
+          <div class="header-info">
+            <span class="badge">
+              {{ m.available ? 'Disponible' : 'Sur rendez-vous' }}
+            </span>
+            <h1 class="title">{{ m.name }}</h1>
+
+            <div class="price-rating">
+              <span class="price">{{ m.rentalPrice | currency: 'EUR' }}</span>
+              <div class="rating">
+                <span class="material-symbols-outlined star-icon">star</span>
+                <span class="rating-value">4.9</span>
+                <span class="rating-count">(48 avis)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description et options -->
+          <div class="description-card">
+            <h3 class="section-title">Description</h3>
+              <p class="description-text">
+                {{ m.description }}
+              </p>
+
+              <div class="mt-4 text-sm text-text-muted">
+                <p>ID: {{ m.id }}</p>
+                <p>Créateur: {{ m.creatorName }} (ID: {{ m.creatorId }})</p>
+                <p>Prix d'achat: {{ m.purchasePrice | currency: 'EUR' }}</p>
+              </div>
+
+            <div class="options-section">
+              <!-- Taille -->
+              <div class="option-group">
+                <div class="option-header">
+                  <label class="option-label">Taille</label>
+                  <button class="guide-link">Guide des tailles</button>
+                </div>
+                <div class="sizes-container">
+                  @for (size of ['34', '36', '38', '40', '42']; track size) {
+                    <button
+                      (click)="selectedSize = size"
+                      [class.size-selected]="selectedSize === size"
+                      class="size-button"
+                    >
+                      {{ size }}
+                    </button>
+                  }
+                </div>
+              </div>
+
+              <!-- Couleur -->
+              <div class="option-group">
+                <label class="option-label"
+                  >Couleur : <span class="font-normal text-text-muted">Blanc Nacré</span></label
+                >
+                <div class="colors-container">
+                  <button
+                    (click)="selectedColor = 'white'"
+                    [class.color-selected]="selectedColor === 'white'"
+                    class="color-button"
+                    style="background-color: #f1f5f9"
+                    title="Blanc"
+                  ></button>
+                  <button
+                    (click)="selectedColor = 'black'"
+                    [class.color-selected]="selectedColor === 'black'"
+                    class="color-button"
+                    style="background-color: #1e293b"
+                    title="Noir"
+                  ></button>
+                  <button
+                    (click)="selectedColor = 'purple'"
+                    [class.color-selected]="selectedColor === 'purple'"
+                    class="color-button"
+                    style="background-color: #7f13ec"
+                    title="Violet"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="actions-section">
+            <button (click)="addToCart()" class="btn-primary">
+              <span class="material-symbols-outlined">shopping_cart</span>
+              <span>Ajouter au panier</span>
+            </button>
+            <button
+              (click)="toggleWishlist()"
+              class="btn-secondary"
+              [class.wishlist-active]="isInWishlist"
+            >
+              <span class="material-symbols-outlined">{{
+                isInWishlist ? 'favorite' : 'favorite_border'
+              }}</span>
+              <span>{{ isInWishlist ? 'Enregistré' : 'Enregistrer dans ma liste' }}</span>
+            </button>
+          </div>
+
+          <!-- Informations supplémentaires -->
+          <div class="info-footer">
+            <div class="info-item">
+              <span class="material-symbols-outlined info-icon">local_shipping</span>
+              <span>Livraison Offerte</span>
+            </div>
+            <div class="info-item">
+              <span class="material-symbols-outlined info-icon">replay</span>
+              <span>Retours gratuits</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+}

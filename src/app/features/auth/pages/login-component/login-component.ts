@@ -19,13 +19,12 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4)]],
     });
-    this.authService = authService;
-    this.authService = authService;
   }
 
   togglePasswordVisibility(): void {
@@ -40,7 +39,16 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           console.log('Login successful:', response);
-          // navigate or reset state as needed
+          // store tokens if provided
+          if (response.token) {
+            localStorage.setItem('token', response.token); // match interceptor key
+            localStorage.setItem('authToken', response.token); // keep legacy key
+          }
+          if (response.refreshToken) {
+            localStorage.setItem('refreshToken', response.refreshToken);
+          }
+          // go to dashboard
+          this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           console.error('Login failed:', error);

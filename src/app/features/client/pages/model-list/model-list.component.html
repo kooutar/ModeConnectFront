@@ -1,0 +1,155 @@
+<app-navbar></app-navbar>
+<div
+  class="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark"
+>
+  <main class="mx-auto w-full max-w-[1440px] px-4 lg:px-20 py-8">
+    <!-- Page Heading & Filters -->
+    <div class="flex flex-col gap-6 mb-10">
+      <div class="flex flex-col gap-1">
+        <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Explorer les Modèles</h1>
+        <p class="text-slate-500 dark:text-slate-400">
+          Trouvez l'inspiration parfaite parmi les créations de nos meilleurs stylistes.
+        </p>
+      </div>
+      <div class="flex items-center gap-3 overflow-x-auto no-scrollbar pb-2">
+        <button
+          class="flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-white text-sm font-bold whitespace-nowrap"
+        >
+          <span class="material-symbols-outlined text-lg">filter_list</span> Tous les styles
+        </button>
+        <button
+          class="flex items-center gap-2 px-5 py-2 rounded-full bg-primary/10 dark:bg-primary/20 text-slate-700 dark:text-slate-200 text-sm font-bold whitespace-nowrap hover:bg-primary/30 transition-colors"
+        >
+          Bohème
+        </button>
+        <button
+          class="flex items-center gap-2 px-5 py-2 rounded-full bg-primary/10 dark:bg-primary/20 text-slate-700 dark:text-slate-200 text-sm font-bold whitespace-nowrap hover:bg-primary/30 transition-colors"
+        >
+          Minimaliste
+        </button>
+        <button
+          class="flex items-center gap-2 px-5 py-2 rounded-full bg-primary/10 dark:bg-primary/20 text-slate-700 dark:text-slate-200 text-sm font-bold whitespace-nowrap hover:bg-primary/30 transition-colors"
+        >
+          Streetwear Luxury
+        </button>
+        <button
+          class="flex items-center gap-2 px-5 py-2 rounded-full bg-primary/10 dark:bg-primary/20 text-slate-700 dark:text-slate-200 text-sm font-bold whitespace-nowrap hover:bg-primary/30 transition-colors"
+        >
+          Business Chic
+        </button>
+        <button
+          class="flex items-center gap-2 px-5 py-2 rounded-full bg-primary/10 dark:bg-primary/20 text-slate-700 dark:text-slate-200 text-sm font-bold whitespace-nowrap hover:bg-primary/30 transition-colors"
+        >
+          Vintage
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <!-- <div *ngIf="loading" class="flex justify-center items-center py-12">
+      <div class="text-center">
+        <div
+          class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"
+        ></div>
+        <p class="text-gray-600">Chargement des modèles...</p>
+      </div>
+    </div> -->
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+      <p class="text-red-800">{{ error }}</p>
+    </div>
+
+    <!-- Marketplace Grid -->
+    <div
+      *ngIf="!loading && models.length > 0"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    >
+      <div
+        *ngFor="let m of models"
+        class="group flex flex-col bg-white dark:bg-slate-900/50 rounded-xl overflow-hidden border border-primary/5 hover:border-primary/20 transition-all duration-300 shadow-sm hover:shadow-xl"
+      >
+        <div class="relative aspect-[4/5] overflow-hidden">
+          <img
+            [src]="
+              m.mediaList.length > 0
+                ? baseImageUrl + m.mediaList[0].mediaUrl
+                : 'https://via.placeholder.com/400x500'
+            "
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            [alt]="m.name"
+          />
+          <div
+            class="absolute top-3 left-3 px-3 py-1 bg-background-dark/60 backdrop-blur-md rounded-full text-xs font-bold text-white"
+          >
+            {{ m.available ? 'Disponible cette semaine' : 'Sur rendez-vous' }}
+          </div>
+          <button
+            class="absolute top-3 right-3 h-8 w-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-primary transition-colors"
+          >
+            <span class="material-symbols-outlined text-lg">favorite</span>
+          </button>
+        </div>
+        <div class="p-4 flex flex-col flex-1 gap-4">
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-primary uppercase tracking-wider">{{
+                m.name
+              }}</span>
+              <span class="text-xl font-bold dark:text-white"
+                >À partir de {{ m.rentalPrice | currency: 'EUR' }}</span
+              >
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="size-10 rounded-full overflow-hidden border border-primary/20">
+              <img
+                [src]="'https://via.placeholder.com/40'"
+                class="h-full w-full object-cover"
+                alt="Stylist avatar"
+              />
+            </div>
+            <div class="flex flex-col">
+              <p class="text-sm font-bold">{{ m.creatorName }}</p>
+              <p class="text-xs text-slate-500">Expertise inconnue</p>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2 mt-auto">
+            <button
+              class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white font-bold py-2.5 rounded-lg transition-colors"
+            >
+              <span class="material-symbols-outlined text-xl">chat</span>
+              Démarrer une conversation
+            </button>
+            <button
+              [routerLink]="['/models', m.id]"
+              [state]="{ model: m }"
+              class="w-full flex items-center justify-center gap-2 border border-primary text-primary font-bold py-2.5 rounded-lg hover:bg-primary/5 transition-colors"
+            >
+              <span class="material-symbols-outlined text-xl">info</span>
+              Détails
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && models.length === 0 && !error" class="text-center py-12">
+      <span class="material-symbols-outlined text-gray-400 text-5xl inline-block mb-4"
+        >checkroom</span
+      >
+      <p class="text-gray-600">Aucun modèle disponible pour le moment.</p>
+    </div>
+
+    <!-- Pagination / Load More -->
+    <div class="flex justify-center mt-12 pb-20">
+      <button
+        class="flex items-center gap-2 px-8 py-3 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-lg transition-all"
+      >
+        Charger plus de modèles
+        <span class="material-symbols-outlined">expand_more</span>
+      </button>
+    </div>
+  </main>
+</div>
