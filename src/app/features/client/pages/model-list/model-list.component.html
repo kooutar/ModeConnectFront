@@ -6,8 +6,8 @@
     <!-- Page Heading & Filters -->
     <div class="flex flex-col gap-6 mb-10">
       <div class="flex flex-col gap-1">
-        <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Explorer les Modèles</h1>
-        <p class="text-slate-500 dark:text-slate-400">
+        <h1 class="text-3xl font-black tracking-tight sm:text-4xl text-text-heading">Explorer les Modèles</h1>
+        <p class="text-text-muted">
           Trouvez l'inspiration parfaite parmi les créations de nos meilleurs stylistes.
         </p>
       </div>
@@ -96,7 +96,7 @@
               <span class="text-xs font-bold text-primary uppercase tracking-wider">{{
                 m.name
               }}</span>
-              <span class="text-xl font-bold dark:text-white"
+              <span class="text-xl font-bold text-text-heading"
                 >À partir de {{ m.rentalPrice | currency: 'EUR' }}</span
               >
             </div>
@@ -116,7 +116,7 @@
           </div>
           <div class="flex flex-col gap-2 mt-auto">
             <button
-              class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white font-bold py-2.5 rounded-lg transition-colors"
+              class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-bold py-2.5 rounded-lg transition-all shadow-lg shadow-primary/20 transform hover:-translate-y-0.5"
             >
               <span class="material-symbols-outlined text-xl">chat</span>
               Démarrer une conversation

@@ -58,18 +58,18 @@ export class RegistrationComponent {
       this.authService.register(registerData).subscribe({
         next: (response) => {
           console.log('Registration successful:', response);
-          this.errorMessage = null;
+          this.showToast("Votre compte a été créé avec succès ! Connectez-vous maintenant.", 'success');
+          this.registrationForm.reset();
         },
         error: (error) => {
           console.error('Registration failed:', error);
+          let msg = "Une erreur est survenue lors de l'inscription.";
           if (error && error.error && error.error.message) {
-            this.errorMessage = error.error.message;
+            msg = error.error.message;
           } else if (error && error.message) {
-            this.errorMessage = error.message;
-          } else {
-            this.errorMessage = "Une erreur est survenue lors de l'inscription.";
+            msg = error.message;
           }
-          alert(this.errorMessage);
+          this.showToast(msg, 'error');
         },
       });
     } else {
@@ -77,6 +77,17 @@ export class RegistrationComponent {
         this.registrationForm.get(key)?.markAsTouched();
       });
     }
+  }
+
+  successMessage: string | null = null;
+  toastType: 'success' | 'error' = 'success';
+
+  showToast(msg: string, type: 'success' | 'error' = 'success') {
+    this.successMessage = msg;
+    this.toastType = type;
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 3000);
   }
 
   signInWithGoogle(): void {

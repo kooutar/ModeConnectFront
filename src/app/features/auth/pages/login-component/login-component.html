@@ -1,5 +1,5 @@
 <div
-  class="flex min-h-screen w-full flex-row bg-background-soft text-slate-900 font-display antialiased"
+  class="flex min-h-screen w-full flex-row bg-background-soft text-text-main font-display antialiased"
 >
   <!-- Left Panel - Hero Image (Hidden on mobile) -->
   <div
@@ -55,15 +55,25 @@
     <div class="mx-auto w-full max-w-sm lg:w-full">
       <!-- Header -->
       <div class="mb-12 text-center lg:text-left">
-        <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-3">Connexion</h1>
-        <p class="text-slate-500 text-lg font-light">
+        <h1 class="text-4xl font-black tracking-tight text-text-heading mb-3">Connexion</h1>
+        <p class="text-text-muted text-lg font-light">
           Bienvenue ! Connectez-vous à votre espace privilégié.
         </p>
       </div>
 
-      <!-- Display authentication error message -->
-      <div *ngIf="errorMessage" class="mb-4 rounded-lg bg-red-100 p-3 text-red-800">
-        {{ errorMessage }}
+      <!-- Notification Toast -->
+      <div class="toast-container" *ngIf="successMessage">
+        <div class="toast" [ngClass]="toastType === 'success' ? 'success' : 'error'">
+          <div class="toast-icon">
+            <span class="material-symbols-outlined" [ngClass]="toastType === 'success' ? 'text-emerald-500' : 'text-red-500'">
+              {{ toastType === 'success' ? 'check_circle' : 'error' }}
+            </span>
+          </div>
+          <div class="toast-content">
+            <p class="toast-title">{{ toastType === 'success' ? 'Succès' : 'Erreur' }}</p>
+            <p class="toast-message">{{ successMessage }}</p>
+          </div>
+        </div>
       </div>
 
       <!-- Login Form -->
@@ -72,7 +82,7 @@
         <div class="space-y-2">
           <label
             for="email"
-            class="block text-sm font-semibold tracking-wide text-slate-700 uppercase"
+            class="block text-sm font-semibold tracking-wide text-text-main uppercase"
           >
             Adresse e-mail
           </label>
@@ -88,7 +98,7 @@
               type="email"
               formControlName="email"
               placeholder="exemple@email.com"
-              class="block w-full rounded-lg border-slate-200 bg-white py-3.5 pl-11 text-slate-900 ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary focus:border-transparent transition-all sm:text-sm shadow-sm"
+              class="block w-full rounded-lg border-gray-200 bg-white py-3.5 pl-11 text-text-main ring-1 ring-inset ring-gray-200 placeholder:text-text-muted focus:ring-2 focus:ring-inset focus:ring-primary focus:border-transparent transition-all sm:text-sm shadow-sm"
               [class.ring-red-500]="
                 loginForm.get('email')?.invalid && loginForm.get('email')?.touched
               "
@@ -107,7 +117,7 @@
             </label>
             <a
               href="#"
-              class="text-sm font-medium text-primary hover:text-primary/70 transition-colors"
+              class="text-sm font-medium text-primary hover:text-primary-hover transition-colors"
             >
               Oublié ?
             </a>
@@ -124,7 +134,7 @@
               [type]="showPassword ? 'text' : 'password'"
               formControlName="password"
               placeholder="••••••••"
-              class="block w-full rounded-lg border-slate-200 bg-white py-3.5 pl-11 pr-11 text-slate-900 ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary focus:border-transparent transition-all sm:text-sm shadow-sm"
+              class="block w-full rounded-lg border-gray-200 bg-white py-3.5 pl-11 pr-11 text-text-main ring-1 ring-inset ring-gray-200 placeholder:text-text-muted focus:ring-2 focus:ring-inset focus:ring-primary focus:border-transparent transition-all sm:text-sm shadow-sm"
               [class.ring-red-500]="
                 loginForm.get('password')?.invalid && loginForm.get('password')?.touched
               "
@@ -209,11 +219,11 @@
       </div>
 
       <!-- Sign Up Link -->
-      <p class="mt-12 text-center text-sm text-slate-500 font-medium">
+      <p class="mt-12 text-center text-sm text-text-muted font-medium">
         Pas encore de compte ?
         <a
-          href="#"
-          class="font-bold text-primary hover:text-primary/70 transition-colors ml-1 underline underline-offset-4"
+          href="/register"
+          class="font-bold text-primary hover:text-primary-hover transition-colors ml-1 underline underline-offset-4"
         >
           Inscrivez-vous ici
         </a>

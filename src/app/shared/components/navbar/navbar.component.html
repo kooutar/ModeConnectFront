@@ -1,24 +1,24 @@
 <header class="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/90 backdrop-blur-md">
   <div class="container mx-auto px-4 md:px-6">
     <div class="flex h-16 items-center justify-between">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 cursor-pointer" routerLink="/">
         <span class="material-symbols-outlined text-primary text-3xl">checkroom</span>
-        <h2 class="text-xl font-bold tracking-tight text-text-heading">StyleMarket</h2>
+        <h2 class="text-xl font-black tracking-tight text-text-heading">StylistMarket</h2>
       </div>
       <nav class="hidden md:flex items-center gap-8">
         <a
-          class="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
+          class="text-sm font-semibold text-text-muted hover:text-primary transition-colors"
           routerLink="/"
         >
           Accueil
         </a>
-        <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="#">
-          Stylistes
+        <a class="text-sm font-semibold text-text-muted hover:text-primary transition-colors" routerLink="/models">
+          Modèles
         </a>
-        <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="#">
+        <a class="text-sm font-semibold text-text-muted hover:text-primary transition-colors" href="#">
           Services
         </a>
-        <a class="text-sm font-medium text-gray-600 hover:text-primary transition-colors" href="#">
+        <a class="text-sm font-semibold text-text-muted hover:text-primary transition-colors" href="#">
           Blog
         </a>
       </nav>
@@ -27,13 +27,13 @@
         <ng-container *ngIf="!isLoggedIn; else loggedInActions">
           <button
             routerLink="/login"
-            class="hidden sm:flex h-9 items-center justify-center rounded-lg px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            class="hidden sm:flex h-10 items-center justify-center rounded-lg px-5 text-sm font-bold text-text-main hover:bg-gray-100 transition-colors"
           >
             Se connecter
           </button>
           <button
             routerLink="/register"
-            class="flex h-9 items-center justify-center rounded-lg bg-primary px-4 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all"
+            class="flex h-10 items-center justify-center rounded-lg bg-primary px-5 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary-hover hover:shadow-primary/30 transform hover:-translate-y-0.5 transition-all"
           >
             S'inscrire
           </button>
@@ -43,13 +43,13 @@
         <ng-template #loggedInActions>
           <button
             routerLink="/dashboard"
-            class="hidden sm:flex h-9 items-center justify-center rounded-lg px-4 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            class="hidden sm:flex h-10 items-center justify-center rounded-lg px-5 text-sm font-bold text-text-main hover:bg-gray-100 transition-colors"
           >
             Dashboard
           </button>
           <button
             (click)="logout()"
-            class="flex h-9 items-center justify-center rounded-lg bg-red-500 px-4 text-sm font-bold text-white shadow-lg shadow-red-500/20 hover:bg-red-600 transition-all"
+            class="flex h-10 items-center justify-center rounded-lg bg-red-500 px-5 text-sm font-bold text-white shadow-lg shadow-red-500/20 hover:bg-red-600 transition-all transform hover:-translate-y-0.5"
           >
             Déconnexion
           </button>

@@ -39,6 +39,7 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           console.log('Login successful:', response);
+          console.log('Received token:', response.token);
           // store tokens if provided
           if (response.token) {
             localStorage.setItem('token', response.token); // match interceptor key
@@ -47,8 +48,21 @@ export class LoginComponent {
           if (response.refreshToken) {
             localStorage.setItem('refreshToken', response.refreshToken);
           }
-          // go to dashboard
-          this.router.navigate(['/dashboard']);
+          if (response.username) {
+            localStorage.setItem('username', response.username);
+          }
+          if (response.userId) {
+            localStorage.setItem('userId', response.userId.toString());
+          }
+           const role = response.role;
+
+            if (role === 'ROLE_CLIENT') {
+              this.router.navigate(['/dashboard']);
+            } 
+            else if (role === 'ROLE_CREATOR') {
+              this.router.navigate(['/creator']);
+            } 
+         
         },
         error: (error) => {
           console.error('Login failed:', error);
@@ -68,8 +82,8 @@ export class LoginComponent {
           if (!this.errorMessage) {
             this.errorMessage = 'Une erreur est survenue lors de la connexion.';
           }
-          // show an alert popup so user notices
-          alert(this.errorMessage);
+          // use showToast logic instead of alert
+          this.showToast(this.errorMessage, 'error');
         },
       });
     } else {
@@ -77,6 +91,17 @@ export class LoginComponent {
         this.loginForm.get(key)?.markAsTouched();
       });
     }
+  }
+
+  successMessage: string | null = null;
+  toastType: 'success' | 'error' = 'success';
+
+  showToast(msg: string, type: 'success' | 'error' = 'success') {
+    this.successMessage = msg;
+    this.toastType = type;
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 3000);
   }
 
   signInWithGoogle(): void {

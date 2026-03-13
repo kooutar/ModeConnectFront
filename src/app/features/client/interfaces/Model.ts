@@ -1,4 +1,5 @@
 import { Media } from './Media';
+import { Review } from './Review';
 
 export interface Model {
   id: number;
@@ -10,4 +11,5 @@ export interface Model {
   creatorName: string;
   available: boolean;
   mediaList: Media[];
+  reviews?: Review[];
 }

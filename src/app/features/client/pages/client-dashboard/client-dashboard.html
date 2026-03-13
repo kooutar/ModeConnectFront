@@ -18,8 +18,8 @@
         ></div>
       </div>
       <div class="text-center">
-        <h2 class="text-lg font-bold leading-tight">Sophie Martin</h2>
-        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Membre Premium</p>
+        <h2 class="text-lg font-black leading-tight text-text-heading">{{ username }}</h2>
+        <p class="text-text-muted text-sm font-medium">Membre Premium</p>
       </div>
     </div>
     <nav class="flex-1 flex flex-col gap-2 p-4">
@@ -27,8 +27,8 @@
         class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-lg shadow-primary/25 transition-all"
         href="#"
       >
-        <span class="material-symbols-outlined fill">dashboard</span>
-        <span class="text-sm font-semibold">Tableau de bord</span>
+        <span class="material-symbols-outlined fill-1">dashboard</span>
+        <span class="text-sm font-bold">Tableau de bord</span>
       </a>
       <a
         class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
@@ -89,13 +89,13 @@
       </a>
     </nav>
     <div class="p-4 mt-auto">
-      <a
-        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-900/10 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-        href="#"
+      <button
+        (click)="logout()"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-900/10 hover:text-red-600 dark:hover:text-red-400 transition-colors w-full text-left"
       >
         <span class="material-symbols-outlined">logout</span>
         <span class="text-sm font-medium">Déconnexion</span>
-      </a>
+      </button>
     </div>
   </aside>
   <main class="flex-1 flex flex-col h-full overflow-hidden relative">
@@ -112,7 +112,7 @@
         ></div>
         <span class="font-bold text-lg">Tableau de Bord</span>
       </div>
-      <button class="text-slate-600 dark:text-white">
+      <button class="text-text-heading">
         <span class="material-symbols-outlined">menu</span>
       </button>
     </header>
@@ -120,7 +120,7 @@
       <div class="max-w-6xl mx-auto space-y-8">
         <div class="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 class="text-3xl lg:text-4xl font-black tracking-tight mb-2">Bonjour, Sophie 👋</h1>
+            <h1 class="text-3xl lg:text-4xl font-black tracking-tight mb-2">Bonjour, {{ username }} 👋</h1>
             <p class="text-slate-500 dark:text-slate-400 text-lg">
               Voici un aperçu de vos activités de stylisme aujourd'hui.
             </p>
@@ -143,9 +143,9 @@
             </div>
             <div>
               <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">
-                Rendez-vous à venir
+                Commandes en attente
               </p>
-              <p class="text-3xl font-bold mt-1">1</p>
+              <p class="text-3xl font-bold mt-1">{{ pendingOrdersCount }}</p>
             </div>
           </div>
           <div
@@ -172,249 +172,172 @@
             <div>
               <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total dépensé</p>
               <p class="text-3xl font-bold mt-1">450€</p>
-            </div>
           </div>
         </div>
         <div class="space-y-4">
           <div class="flex items-center justify-between">
-            <h2 class="text-xl font-bold">Ma Prochaine Séance</h2>
-            <a class="text-primary text-sm font-semibold hover:underline" href="#"
-              >Voir le calendrier</a
+            <h2 class="text-xl font-black text-text-heading">Mes Modèles Loués</h2>
+            <a class="text-primary text-sm font-bold hover:underline" routerLink="/models"
+              >Découvrir plus</a
             >
           </div>
-          <div
-            class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col md:flex-row"
-          >
-            <div
-              class="md:w-2/5 h-48 md:h-auto bg-cover bg-center relative group"
-              data-alt="Stylist consulting with a client in a modern studio setting"
-              style="
-                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBW5EI2vjTIFp6VHyCkG0yKfGTie8YQW6VoByXpLgB0CzaQ9RmFCFYrUoAuFTrhukITOiyzXWDzZx7A5tOgWwJylBX3rtTXWVooqpzAU5AbIVxW5ONugKAh-HVjwASIaxGindmmCY2GSDOFbh45XgzcFXCL7VYfIgp6jAgMPNm6XMYNgjObnwcOx3BO0aG0bew9SwMZJdD6bKqIpHnqpziWpIyxhOk0gsjr1DuzYgf3cPWWORx2AMMTsasCVmJgTVdsvgrn47sRtoA8');
-              "
-            >
+
+          @if (loading) {
+            <div class="flex justify-center py-8">
               <div
-                class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                class="spinner-mini"
+                style="border-top-color: var(--primary); width: 24px; height: 24px"
               ></div>
             </div>
-            <div class="p-6 md:p-8 flex flex-col justify-center flex-1 gap-4">
-              <div class="flex items-start justify-between">
-                <div class="flex items-center gap-2 mb-1">
-                  <span
-                    class="px-2.5 py-1 rounded-full bg-green-500/10 text-green-600 dark:text-green-400 text-xs font-bold uppercase tracking-wider"
-                    >Confirmé</span
-                  >
-                  <span
-                    class="px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 text-xs font-bold uppercase tracking-wider"
-                    >Relooking</span
-                  >
-                </div>
-              </div>
-              <div>
-                <h3 class="text-2xl font-bold mb-2">Relooking Complet avec Julie Dubois</h3>
-                <p class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-lg">
-                  Séance de 2 heures incluant l'analyse de colorimétrie et le tri de garde-robe.
-                  Préparez vos tenues préférées !
-                </p>
-              </div>
-              <div
-                class="flex flex-wrap items-center gap-6 mt-2 pt-6 border-t border-slate-200 dark:border-slate-800/50"
-              >
-                <div class="flex items-center gap-2">
-                  <span class="material-symbols-outlined text-primary">calendar_today</span>
-                  <span class="font-semibold">Mercredi 24 Octobre</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="material-symbols-outlined text-primary">schedule</span>
-                  <span class="font-semibold">14:00 - 16:00</span>
-                </div>
-                <div class="flex-1"></div>
-                <button
-                  class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2"
-                >
-                  Gérer la réservation
-                  <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                </button>
-              </div>
+          } @else if (error) {
+            <div class="p-4 bg-red-50 text-red-600 rounded-xl border border-red-200">
+              <p>{{ error }}</p>
             </div>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between px-1">
-              <h2 class="text-xl font-bold">Messages Récents</h2>
-              <button
-                class="size-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              >
-                <span class="material-symbols-outlined text-slate-500">more_horiz</span>
-              </button>
-            </div>
+          } @else if (rentedModels.length === 0) {
             <div
-              class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden"
+              class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-8 text-center text-slate-500"
             >
-              <div class="divide-y divide-slate-200 dark:divide-slate-800">
-                <div
-                  class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group"
-                >
-                  <div class="flex items-start gap-3">
-                    <div class="relative">
-                      <div
-                        class="size-10 rounded-full bg-cover bg-center"
-                        data-alt="Portrait of stylist Julie Dubois"
-                        style="
-                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDA9nVdmSpb7aN8mrFv3GT93XEYHpoAI0rQReroW3raMhlOry2JkEk7sQnciBTo12fE1j4lLmF64zrH_33_p2mQ_xEawygfM0lhf9TGweH19pGQmPOqaQuLnK0kR3lLm2m6DK55znVkFra5SGGV32T9cug3eM2IxI2Y81c3gcaBH2e9PmCs-nGLKHr9o6PTkzweKlOJNaQnP7INmVKVc1y42JT9MpyS7jIHNpJL-cD4hf7UvWlEKdhw4NIFTLHhhQ3RAxhAagTCOuy-');
-                        "
-                      ></div>
-                      <div
-                        class="absolute bottom-0 right-0 size-2.5 bg-green-500 border-2 border-white dark:border-surface-dark rounded-full"
-                      ></div>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-center justify-between mb-0.5">
-                        <h4 class="font-bold text-sm">Julie Dubois</h4>
-                        <span class="text-xs text-primary font-bold">14:02</span>
-                      </div>
-                      <p class="text-sm text-slate-600 dark:text-slate-300 truncate font-medium">
-                        J'ai hâte de vous voir mercredi ! N'oubl...
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group"
-                >
-                  <div class="flex items-start gap-3">
-                    <div class="relative">
-                      <div
-                        class="size-10 rounded-full bg-cover bg-center"
-                        data-alt="Portrait of stylist Marc Laurent"
-                        style="
-                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7WGIw4OKC3ZGWhoCSVbWCce_EpvBnqjxs5CTcfFcl-sQLj55N0aJk2g50MXjq7g5dfCZJqox8fTuRB6tLPmmMW1lmq513TkkQUEODuTHvnk-MgOpeNzPX6yUNXYR6sh3i1fz77QPklJYw5T0Ynn3yvbqsb8-Thzfy7tCyW0URI5d6PfI7ieQiCUQUprqTchKgeHqesDlT43WN3wTbNmQY87N-aCF6uM_MtnZwoALCQrn3wZ6tB_0_p51oVugMqpV_djGltzTbHLtY');
-                        "
-                      ></div>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-center justify-between mb-0.5">
-                        <h4 class="font-bold text-sm">Marc Laurent</h4>
-                        <span class="text-xs text-slate-500">Hier</span>
-                      </div>
-                      <p class="text-sm text-slate-500 dark:text-slate-400 truncate">
-                        Merci pour votre avis, c'était un plaisir...
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="p-4 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer group"
-                >
-                  <div class="flex items-start gap-3">
-                    <div class="relative">
-                      <div
-                        class="size-10 rounded-full bg-cover bg-center"
-                        data-alt="Portrait of stylist Clara V."
-                        style="
-                          background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAk0k8wxh7skfj8xVjvlpv0tWgauxNU5pKqvYE94OqHBttEgxFzv6Q0tlaIFHNaWqa_eCKJ_UlrN3rZgdAmc3aXq-WfGAXL69RabdaBAJtpc5f5V1g8VgRQil62KNbbRcYKjfapoXjS_4F_OTUMKs9a_g5tVtaBqUkjxEq5VXYrxobvSr1MemR4pVhqUGztw_ifcQS0CUksusLB3vSdXZXcUxP6ivf90l4YXqKcllilcWTsJqWV9WMFaS66PAprd2egseysRZLqrJJq');
-                        "
-                      ></div>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-center justify-between mb-0.5">
-                        <h4 class="font-bold text-sm">Clara V.</h4>
-                        <span class="text-xs text-slate-500">20 Oct</span>
-                      </div>
-                      <p class="text-sm text-slate-500 dark:text-slate-400 truncate">
-                        Les photos de la séance sont prêtes.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-3 bg-slate-50 dark:bg-slate-800/50 text-center border-t border-slate-200 dark:border-slate-800"
-              >
-                <button class="text-primary text-sm font-semibold hover:underline">
-                  Voir tous les messages
-                </button>
-              </div>
+              <span class="material-symbols-outlined text-4xl mb-2 text-slate-400">checkroom</span>
+              <p>Vous n'avez pas encore loué de modèle.</p>
             </div>
-          </div>
-          <div class="flex flex-col gap-4">
+          } @else {
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              @for (model of rentedModels; track model.id) {
+                <div
+                  class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col sm:flex-row group transition-all hover:border-primary/50 hover:shadow-md cursor-pointer"
+                  [routerLink]="['/models', model.id]"
+                >
+                  <div
+                    class="sm:w-1/3 h-40 sm:h-auto bg-cover bg-center relative"
+                    [style.background-image]="
+                      'url(' +
+                      (model.mediaList && model.mediaList.length > 0
+                        ? baseImageUrl + model.mediaList[0].mediaUrl
+                        : 'https://via.placeholder.com/300') +
+                      ')'
+                    "
+                  >
+                    <div
+                      class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                    ></div>
+                  </div>
+                  <div class="p-5 flex flex-col justify-center flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span
+                        class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider"
+                        >En cours</span
+                      >
+                    </div>
+                    <h3 class="text-lg font-bold mb-1">{{ model.name }}</h3>
+                    <p class="text-slate-500 text-sm mb-3">Créateur : {{ model.creatorName }}</p>
+                    <div
+                      class="mt-auto flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-3"
+                    >
+                      <div class="text-primary font-bold text-sm">
+                        {{ model.rentalPrice | currency: 'EUR' }}
+                      </div>
+                      <button class="text-slate-400 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+        <div class="flex flex-col gap-4">
+         
             <div class="flex items-center justify-between px-1">
-              <h2 class="text-xl font-bold">Historique Récent</h2>
-              <button
-                class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors"
-              >
-                <span class="material-symbols-outlined">filter_list</span>
-              </button>
+              <h2 class="text-xl font-bold">Mes commandes</h2>
             </div>
-            <div class="flex flex-col gap-3">
-              <div
-                class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
-              >
+
+            @if (ordersLoading) {
+              <div class="flex justify-center py-8">
+                <p>Chargement en cours...</p>
                 <div
-                  class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-none"
-                >
-                  <span class="material-symbols-outlined text-slate-500">check_circle</span>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <h4 class="font-bold text-sm truncate">Shopping Personnalisé</h4>
-                  <p class="text-xs text-slate-500 dark:text-slate-400">
-                    15 Octobre • Avec Marc Laurent
-                  </p>
-                </div>
-                <div class="text-right">
-                  <p class="font-bold text-sm">150€</p>
-                  <p class="text-[10px] text-green-500 font-bold uppercase">Terminé</p>
-                </div>
-                <button class="text-slate-400 hover:text-primary">
-                  <span class="material-symbols-outlined text-[20px]">download</span>
-                </button>
+                  class="spinner-mini"
+                  style="border-top-color: var(--primary); width: 24px; height: 24px"
+                ></div>
               </div>
+            } @else if (ordersError) {
+              <div class="p-4 bg-red-50 text-red-600 rounded-xl border border-red-200">
+                <p>{{ ordersError }}</p>
+              </div>
+            } @else if (orders.length === 0) {
               <div
-                class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
+                class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center text-slate-500"
               >
-                <div
-                  class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-none"
-                >
-                  <span class="material-symbols-outlined text-slate-500">cancel</span>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <h4 class="font-bold text-sm truncate">Audit Garde-robe</h4>
-                  <p class="text-xs text-slate-500 dark:text-slate-400">
-                    10 Octobre • Avec Sarah K.
-                  </p>
-                </div>
-                <div class="text-right">
-                  <p class="font-bold text-sm">80€</p>
-                  <p class="text-[10px] text-red-500 font-bold uppercase">Annulé</p>
-                </div>
-                <button class="text-slate-400 hover:text-primary">
-                  <span class="material-symbols-outlined text-[20px]">info</span>
-                </button>
+                <p>Vous n'avez encore passé aucune commande.</p>
               </div>
+            } @else {
               <div
-                class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
+                class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto"
               >
-                <div
-                  class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-none"
-                >
-                  <span class="material-symbols-outlined text-slate-500">star</span>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <h4 class="font-bold text-sm truncate">Conseil en Image</h4>
-                  <p class="text-xs text-slate-500 dark:text-slate-400">
-                    01 Octobre • Avec Julie Dubois
-                  </p>
-                </div>
-                <div class="text-right">
-                  <p class="font-bold text-sm">220€</p>
-                  <p class="text-[10px] text-green-500 font-bold uppercase">Terminé</p>
-                </div>
-                <button class="text-slate-400 hover:text-primary">
-                  <span class="material-symbols-outlined text-[20px]">download</span>
-                </button>
+                <table class="min-w-full text-sm">
+                  <thead class="bg-slate-50 dark:bg-slate-800/40 text-left">
+                    <tr>
+                      <th class="px-4 py-3 font-semibold text-slate-500">#</th>
+                      <th class="px-4 py-3 font-semibold text-slate-500">Modèle</th>
+                      <th class="px-4 py-3 font-semibold text-slate-500">Type</th>
+                      <th class="px-4 py-3 font-semibold text-slate-500">Jours</th>
+                      <th class="px-4 py-3 font-semibold text-slate-500">Date réservation</th>
+                      <th class="px-4 py-3 font-semibold text-slate-500">Statut</th>
+                      <th class="px-4 py-3 font-semibold text-slate-500">Créée le</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (order of orders; track order.id) {
+                      <tr class="border-t border-slate-100 dark:border-slate-800">
+                        <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
+                          {{ order.id }}
+                        </td>
+                        <td class="px-4 py-2 font-medium">
+                          {{ order.modelName }}
+                        </td>
+                        <td class="px-4 py-2">
+                          <span
+                            class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
+                            [ngClass]="{
+                              'bg-emerald-100 text-emerald-700': order.orderType === 'PURCHASE',
+                              'bg-indigo-100 text-indigo-700': order.orderType === 'RENTAL',
+                            }"
+                          >
+                            {{ order.orderType }}
+                          </span>
+                        </td>
+                        <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
+                          {{ order.reservation_days || '-' }}
+                        </td>
+                        <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
+                          {{ order.reservationDate || '-' }}
+                        </td>
+                        <td class="px-4 py-2">
+                          <span
+                            class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
+                            [ngClass]="{
+                              'bg-emerald-100 text-emerald-700': order.status === 'ACCEPTED',
+                              'bg-amber-100 text-amber-700': order.status === 'PENDING',
+                              'bg-red-100 text-red-700': order.status === 'REJECTED',
+                            }"
+                          >
+                            {{ order.status }}
+                          </span>
+                        </td>
+                        <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
+                          {{ order.createdAt | date: 'short' }}
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
               </div>
-            </div>
-          </div>
+            }
+          
+        </div>
+
+
+        
         </div>
       </div>
     </div>
