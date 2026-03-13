@@ -16,6 +16,6 @@ export class AuthService {
         return this.httpClient.post<string>(this.urlRegistre,data);
     }
     login(data:LoginRequest){
-        return this.httpClient.post<LoginResponse>(this.urlLogin, data ,{withCredentials: true});
+        return this.httpClient.post<LoginResponse>(this.urlLogin, data );
     }
 }

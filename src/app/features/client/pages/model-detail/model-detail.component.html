@@ -1,0 +1,325 @@
+@if (true) {
+  <main class="main-container">
+    <div class="max-w-[1280px] mx-auto px-4 md:px-10 lg:px-20 py-8">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <button class="breadcrumb-link" routerLink="/models">Modèles</button>
+        <span class="material-symbols-outlined breadcrumb-icon">chevron_right</span>
+        <span class="breadcrumb-current">{{ model?.name || 'Détails du modèle' }}</span>
+      </nav>
+
+      <!-- Loading / Error / Empty states -->
+      <!-- <div *ngIf="loading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Chargement du modèle...</p>
+      </div> -->
+
+      <div
+        *ngIf="error && !loading"
+        class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+        style="border-radius: 12px"
+      >
+        <p class="text-red-800">{{ error }}</p>
+      </div>
+
+      <div *ngIf="!loading && !error && !model" class="text-center py-12">
+        <p class="text-gray-600">Aucune donnée à afficher pour ce modèle.</p>
+      </div>
+
+      <!-- Contenu principal -->
+      <div class="content-grid" *ngIf="!loading && !error && model">
+        <!-- Section Images -->
+        <div class="images-section" *ngIf="model as m">
+          <!-- Image principale -->
+          <div class="main-image-container">
+            <img
+              [src]="
+                m.mediaList.length
+                  ? baseImageUrl + m.mediaList[selectedImageIndex]?.mediaUrl
+                  : 'https://via.placeholder.com/600x700'
+              "
+              [alt]="m.name"
+              class="main-image"
+            />
+          </div>
+
+          <!-- Miniatures -->
+          <div class="thumbnails-grid" *ngIf="m.mediaList.length">
+            <button
+              *ngFor="let media of m.mediaList; let i = index"
+              (click)="selectImage(i)"
+              [class.thumbnail-active]="selectedImageIndex === i"
+              class="thumbnail-button"
+            >
+              <img [src]="baseImageUrl + media.mediaUrl" [alt]="m.name + ' ' + (i + 1)" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Section Détails -->
+        <div class="details-section" *ngIf="model as m">
+          <!-- En-tête -->
+          <div class="header-info">
+            <span class="badge">
+              {{ m.available ? 'Disponible' : 'Sur rendez-vous' }}
+            </span>
+            <h1 class="title">{{ m.name }}</h1>
+
+            <div class="price-rating">
+              <span class="price">{{ m.rentalPrice | currency: 'EUR' }}</span>
+              <div class="rating">
+                <span class="material-symbols-outlined star-icon">star</span>
+                <span class="rating-value">4.9</span>
+                <span class="rating-count">(48 avis)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description et options -->
+          <div class="description-card">
+            <h3 class="section-title">Description</h3>
+            <p class="description-text">
+              {{ m.description }}
+            </p>
+
+            <div class="mt-4 text-sm text-text-muted">
+              <p>ID: {{ m.id }}</p>
+              <p>Créateur: {{ m.creatorName }} (ID: {{ m.creatorId }})</p>
+              <p>Prix d'achat: {{ m.purchasePrice | currency: 'EUR' }}</p>
+            </div>
+
+            <div class="options-section">
+              <!-- Taille -->
+              <div class="option-group">
+                <div class="option-header">
+                  <label class="option-label">Taille</label>
+                  <button class="guide-link">Guide des tailles</button>
+                </div>
+                <div class="sizes-container">
+                  @for (size of ['34', '36', '38', '40', '42']; track size) {
+                    <button
+                      (click)="selectedSize = size"
+                      [class.size-selected]="selectedSize === size"
+                      class="size-button"
+                    >
+                      {{ size }}
+                    </button>
+                  }
+                </div>
+              </div>
+
+              <!-- Couleur -->
+              <div class="option-group">
+                <label class="option-label"
+                  >Couleur : <span class="font-normal text-text-muted">Blanc Nacré</span></label
+                >
+                <div class="colors-container">
+                  <button
+                    (click)="selectedColor = 'white'"
+                    [class.color-selected]="selectedColor === 'white'"
+                    class="color-button"
+                    style="background-color: #f1f5f9"
+                    title="Blanc"
+                  ></button>
+                  <button
+                    (click)="selectedColor = 'black'"
+                    [class.color-selected]="selectedColor === 'black'"
+                    class="color-button"
+                    style="background-color: #1e293b"
+                    title="Noir"
+                  ></button>
+                  <button
+                    (click)="selectedColor = 'purple'"
+                    [class.color-selected]="selectedColor === 'purple'"
+                    class="color-button"
+                    style="background-color: #7f13ec"
+                    title="Violet"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="actions-section">
+            <!-- Messages de succès -->
+            @if (rentalSuccess) {
+              <div class="success-alert">
+                <span class="material-symbols-outlined">check_circle</span>
+                <p>Réservation effectuée avec succès!</p>
+              </div>
+            }
+
+            @if (buySuccess) {
+              <div class="success-alert">
+                <span class="material-symbols-outlined">check_circle</span>
+                <p>Achat effectué avec succès!</p>
+              </div>
+            }
+
+            <!-- Messages d'erreur -->
+            @if (rentalError && !showRentalModal) {
+              <div class="error-alert">
+                <span class="material-symbols-outlined">error</span>
+                <p>{{ rentalError }}</p>
+              </div>
+            }
+
+            @if (buyError) {
+              <div class="error-alert">
+                <span class="material-symbols-outlined">error</span>
+                <p>{{ buyError }}</p>
+              </div>
+            }
+
+            <button
+              (click)="rentModel()"
+              class="btn-primary rent-btn"
+              [disabled]="hasRented"
+              [class.btn-disabled]="hasRented"
+            >
+              <span class="material-symbols-outlined">calendar_month</span>
+              <span>
+                 {{ hasRented ? 'Déjà réservé' : 'Louer - ' + (model.rentalPrice | currency: 'EUR') }}
+              </span>
+            </button>
+            <button 
+              (click)="buyModel()" 
+              class="btn-primary buy-btn"
+              [disabled]="hasBought || buyLoading"
+              [class.btn-disabled]="hasBought || buyLoading"
+            >
+              @if (buyLoading) {
+                <span class="spinner-mini"></span>
+                <span>En cours...</span>
+              } @else {
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <span>{{ hasBought ? 'Déjà acheté' : 'Acheter - ' + (model.purchasePrice | currency: 'EUR') }}</span>
+              }
+            </button>
+            <button
+               (click)="toggleWishlist()"
+               class="btn-secondary"
+               [class.wishlist-active]="isInWishlist"
+             >
+               <span class="material-symbols-outlined">{{
+                 isInWishlist ? 'favorite' : 'favorite_border'
+               }}</span>
+               <span>{{ isInWishlist ? 'Enregistré' : 'Enregistrer dans ma liste' }}</span>
+             </button>
+
+             <button
+               [routerLink]="['/chat', model.creatorId]"
+               [queryParams]="{ creatorName: model.creatorName }"
+               class="btn-secondary message-btn"
+             >
+               <span class="material-symbols-outlined">chat_bubble</span>
+               <span>Démarrer conversation</span>
+             </button>
+           </div>
+
+          <!-- Informations supplémentaires -->
+          <div class="info-footer">
+            <div class="info-item">
+              <span class="material-symbols-outlined info-icon">local_shipping</span>
+              <span>Livraison Offerte</span>
+            </div>
+            <div class="info-item">
+              <span class="material-symbols-outlined info-icon">replay</span>
+              <span>Retours gratuits</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+}
+
+<!-- Modal de Location -->
+@if (showRentalModal) {
+  <div class="modal-overlay" (click)="closeRentalModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">Réserver {{ model?.name }}</h2>
+        <button class="modal-close-btn" (click)="closeRentalModal()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        @if (rentalError) {
+          <div class="error-alert">
+            <span class="material-symbols-outlined">error</span>
+            <p>{{ rentalError }}</p>
+          </div>
+        }
+
+        <div class="form-group">
+          <label class="form-label">Date de réservation</label>
+          <input
+            type="date"
+            [(ngModel)]="rentalStartDate"
+            (change)="onStartDateChange()"
+            [min]="minDate"
+            class="form-input"
+            [disabled]="rentalLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Date de fin</label>
+          <input
+            type="date"
+            [(ngModel)]="rentalEndDate"
+            (change)="onEndDateChange()"
+            [min]="rentalStartDate || minDate"
+            class="form-input"
+            [disabled]="rentalLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nombre de jours</label>
+          <input
+            type="number"
+            [(ngModel)]="rentalDays"
+            class="form-input"
+            readonly
+            placeholder="Autocalculé"
+          />
+        </div>
+
+        <div class="rental-summary">
+          <div class="summary-item">
+            <span>Prix par jour:</span>
+            <span class="price">{{ model?.rentalPrice | currency: 'EUR' }}</span>
+          </div>
+          <div class="summary-item total">
+            <span>Total:</span>
+            <span class="price">
+              {{ (model?.rentalPrice || 0) * rentalDays | currency: 'EUR' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button (click)="closeRentalModal()" class="btn-cancel" [disabled]="rentalLoading">
+          Annuler
+        </button>
+        <button
+          (click)="submitRental()"
+          class="btn-confirm"
+          [disabled]="rentalLoading || rentalDays <= 0"
+        >
+          @if (rentalLoading) {
+            <span class="spinner-mini"></span>
+            <span>En cours...</span>
+          } @else {
+            <span>Confirmer la réservation</span>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+}

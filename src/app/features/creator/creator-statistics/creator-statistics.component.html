@@ -1,0 +1,161 @@
+<div class="flex min-h-screen bg-slate-50 dark:bg-slate-950">
+  <app-creator-sidebar></app-creator-sidebar>
+
+  <main class="flex-1 overflow-auto">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8 py-8 space-y-8">
+      
+      <!-- En-tête -->
+      <header class="flex justify-between items-end">
+        <div>
+          <h1 class="text-3xl font-black tracking-tight mb-2">Statistiques & Revenus</h1>
+          <p class="text-slate-500 font-medium">Analysez vos performances de vente et de location.</p>
+        </div>
+        <button (click)="loadStats()" class="p-2.5 rounded-xl border-2 border-slate-200 text-slate-500 hover:bg-white hover:text-slate-900 transition-all shadow-sm">
+          <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        </button>
+      </header>
+
+      <!-- Cartes de résumé -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="p-6 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-lg transition-all">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Total Commandes</p>
+            <p class="text-3xl font-black text-slate-900 animate-in slide-in-from-bottom duration-500">{{ stats.total }}</p>
+          </div>
+          <div class="size-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-900">
+            <svg class="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          </div>
+        </div>
+
+        <div class="p-6 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-lg transition-all border-l-4 border-l-emerald-500">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Acceptées</p>
+            <p class="text-3xl font-black text-emerald-600 animate-in slide-in-from-bottom duration-500">{{ stats.accepted }}</p>
+          </div>
+          <div class="size-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600">
+            <svg class="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+        </div>
+
+        <div class="p-6 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-lg transition-all border-l-4 border-l-rose-500">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Rejetées</p>
+            <p class="text-3xl font-black text-rose-600 animate-in slide-in-from-bottom duration-500">{{ stats.rejected }}</p>
+          </div>
+          <div class="size-12 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-600">
+            <svg class="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+        </div>
+
+        <div class="p-6 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-lg transition-all border-l-4 border-l-amber-500">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">En attente</p>
+            <p class="text-3xl font-black text-amber-600 animate-in slide-in-from-bottom duration-500">{{ stats.pending }}</p>
+          </div>
+          <div class="size-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600">
+            <svg class="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Graphiques -->
+      <div class="grid lg:grid-cols-2 gap-8">
+        
+        <!-- Graphique Circulaire Commandes Status -->
+        <div class="p-8 bg-white rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center justify-center space-y-8 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 p-8 opacity-5">
+             <svg class="size-32" fill="currentColor" viewBox="0 0 24 24"><path d="M11 2v20c-5.07-.5-9-4.79-9-10s3.93-9.5 9-10zm2 1.34V11h7.94c-.45-4.13-3.66-7.31-7.94-7.66zM13 13v7.66c4.28-.35 7.49-3.53 7.94-7.66H13z"/></svg>
+          </div>
+
+          <h3 class="text-xl font-bold self-start mb-4">Répartition des Commandes</h3>
+
+          <div class="relative size-64 flex items-center justify-center">
+            <svg class="size-full transform -rotate-90" viewBox="0 0 100 100">
+              <!-- Fond -->
+              <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f1f5f9" stroke-width="12"></circle>
+              
+              <!-- Acceptées -->
+              <circle cx="50" cy="50" r="40" fill="transparent" stroke="#10b981" stroke-width="12"
+                      [attr.stroke-dasharray]="getStrokeDashArray(stats.ratioAccepted)"
+                      stroke-linecap="round" class="transition-all duration-1000"></circle>
+              
+              <!-- Rejetées (calcul basé sur la fin de l'accepté) -->
+              <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f43f5e" stroke-width="12"
+                      [attr.stroke-dasharray]="getStrokeDashArray(stats.ratioRejected)"
+                      [style.stroke-dashoffset]="-(stats.ratioAccepted / 100) * (2 * 3.14 * 40)"
+                      stroke-linecap="round" class="transition-all duration-1000"></circle>
+
+              <!-- En attente -->
+               <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f59e0b" stroke-width="12"
+                      [attr.stroke-dasharray]="getStrokeDashArray(stats.ratioPending)"
+                      [style.stroke-dashoffset]="-((stats.ratioAccepted + stats.ratioRejected) / 100) * (2 * 3.14 * 40)"
+                      stroke-linecap="round" class="transition-all duration-1000"></circle>
+            </svg>
+            <div class="absolute flex flex-col items-center justify-center">
+              <span class="text-xs font-bold text-slate-400 uppercase">Taux d'acceptation</span>
+              <span class="text-3xl font-black text-slate-900">{{ stats.ratioAccepted | number:'1.0-1' }}%</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4 w-full">
+            <div class="flex items-center gap-2">
+              <span class="size-3 bg-emerald-500 rounded-full"></span>
+              <span class="text-xs font-semibold text-slate-500">Acceptées</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="size-3 bg-rose-500 rounded-full"></span>
+              <span class="text-xs font-semibold text-slate-500">Rejetées</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="size-3 bg-amber-500 rounded-full"></span>
+              <span class="text-xs font-semibold text-slate-500">En attente</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Graphique en Barres Type de commande -->
+        <div class="p-8 bg-white rounded-[2rem] shadow-sm border border-slate-100 flex flex-col">
+          <h3 class="text-xl font-bold mb-8">Ventes vs Locations</h3>
+
+          <div class="space-y-12 my-auto">
+            <!-- Ventes -->
+            <div class="space-y-3">
+              <div class="flex justify-between items-end">
+                <span class="text-sm font-bold text-slate-900">ACHAT DIRECT</span>
+                <span class="text-sm font-black text-indigo-600">{{ stats.purchase }} orders</span>
+              </div>
+              <div class="w-full bg-slate-100 h-6 rounded-full overflow-hidden">
+                <div 
+                  class="h-full bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full transition-all duration-1000 ease-out shadow-sm"
+                  [style.width.%]="(stats.purchase / stats.total) * 100">
+                </div>
+              </div>
+            </div>
+
+            <!-- Locations -->
+            <div class="space-y-3">
+              <div class="flex justify-between items-end">
+                <span class="text-sm font-bold text-slate-900">LOCATION</span>
+                <span class="text-sm font-black text-cyan-600">{{ stats.rental }} orders</span>
+              </div>
+              <div class="w-full bg-slate-100 h-6 rounded-full overflow-hidden">
+                <div 
+                  class="h-full bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-full transition-all duration-1000 ease-out shadow-sm"
+                  [style.width.%]="(stats.rental / stats.total) * 100">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-8 text-xs text-slate-400 font-medium bg-slate-50 p-4 rounded-2xl italic">
+            * Ces données reflètent l'ensemble des interactions clients sur vos modèles. Un taux élevé de location suggère une forte demande saisonnière.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>

@@ -1,0 +1,117 @@
+<div class="flex min-h-screen bg-background-soft">
+  <!-- Sidebar partagée -->
+  <app-creator-sidebar></app-creator-sidebar>
+
+  <div class="flex-1 overflow-auto">
+    <div class="orders-container">
+  <div class="mb-8">
+    <h1 class="text-2xl lg:text-3xl font-black tracking-tight text-text-heading mb-1">Mes Commandes</h1>
+    <p class="text-text-muted text-sm">Gérez vos locations et ventes en un coup d'œil</p>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast-container" *ngIf="successMessage">
+    <div class="toast" [ngClass]="toastType === 'success' ? 'success' : 'error'">
+      <div class="toast-icon">
+        <span class="material-symbols-outlined" [ngClass]="toastType === 'success' ? 'text-emerald-500' : 'text-red-500'">
+          {{ toastType === 'success' ? 'check_circle' : 'error' }}
+        </span>
+      </div>
+      <div class="toast-content">
+        <p class="toast-title">{{ toastType === 'success' ? 'Succès' : 'Erreur' }}</p>
+        <p class="toast-message">{{ successMessage }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loader-container">
+    <div class="spinner"></div>
+    <p>Chargement des commandes...</p>
+  </div>
+
+  <div *ngIf="error" class="error-banner">
+    <i class="fas fa-exclamation-circle"></i>
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="table-card">
+    <div class="table-responsive">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Modèle</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Détails</th>
+            <th>Statut</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders" class="order-row">
+            <td>
+              <div class="client-info">
+                <div class="avatar-placeholder">{{ order.clientName.charAt(0) }}</div>
+                <span>{{ order.clientName }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="model-name">{{ order.modelName }}</span>
+            </td>
+            <td>
+              <span class="badge" [ngClass]="order.orderType.toLowerCase()">
+                {{ order.orderType === 'PURCHASE' ? 'Achat' : 'Location' }}
+              </span>
+            </td>
+            <td>
+              <span class="date-text">{{ order.createdAt | date:'shortDate' }}</span>
+            </td>
+            <td>
+              <div *ngIf="order.orderType === 'RENTAL'" class="rental-details">
+                <span class="days-badge">{{ order.reservation_days }} jours</span>
+                <small class="res-date">Le {{ order.reservationDate | date:'shortDate' }}</small>
+              </div>
+              <span *ngIf="order.orderType === 'PURCHASE'" class="muted-text">—</span>
+            </td>
+            <td>
+              <span class="status-pill" [attr.data-status]="order.status">
+                {{ order.status }}
+              </span>
+            </td>
+            <td class="text-center">
+              <div class="action-buttons" *ngIf="order.status === 'PENDING'; else statusDone">
+                <button 
+                  (click)="acceptOrder(order.id)" 
+                  class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20" 
+                  [disabled]="actionLoading === order.id"
+                  title="Accepter">
+                  <span *ngIf="actionLoading !== order.id">Accepter</span>
+                  <span *ngIf="actionLoading === order.id" class="mini-spinner"></span>
+                </button>
+                <button 
+                  (click)="rejectOrder(order.id)" 
+                  class="bg-red-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-600 transition-all shadow-lg shadow-red-500/20" 
+                  [disabled]="actionLoading === order.id"
+                  title="Refuser">
+                   Refuser
+                </button>
+              </div>
+              <ng-template #statusDone>
+                <span class="done-text">Traitée</span>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="orders.length === 0" class="empty-state">
+      <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-box-4486358-3723267.png" alt="Pas de commandes">
+      <p>Aucune commande pour le moment.</p>
+    </div>
+  </div>
+    </div>
+  </div>
+</div>
+

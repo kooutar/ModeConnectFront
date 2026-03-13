@@ -3,7 +3,15 @@ import { RegistrationComponent } from './features/auth/pages/registration-compon
 import { LoginComponent } from './features/auth/pages/login-component/login-component';
 import { HomeComponent } from './features/home/pages/home-component/home-component';
 import { ClientDashboardComponent } from './features/client/pages/client-dashboard/client-dashboard';
+import { ModelListComponent } from './features/client/pages/model-list/model-list.component';
+import { ModelDetailComponent } from './features/client/pages/model-detail/model-detail.component';
 import { authGuard } from './core/guards/auth-guard';
+import { CreatorDashboard } from './features/creator/creator-dashboard/creator-dashboard';
+
+import { CreatorOrdersComponent } from './features/creator/creator-orders/creator-orders.component';
+
+import { CreatorModelDetailComponent } from './features/creator/creator-model-detail/creator-model-detail.component';
+import { CreatorStatisticsComponent } from './features/creator/creator-statistics/creator-statistics.component';
 
 export const routes: Routes = [
   {
@@ -23,4 +31,34 @@ export const routes: Routes = [
     component: ClientDashboardComponent,
     canActivate: [authGuard],
   },
+  {
+    path: 'models',
+    component: ModelListComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'models/:id',
+    component: ModelDetailComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path:'creator',
+    component:CreatorDashboard,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'creator/orders',
+    component: CreatorOrdersComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'creator/models/:id',
+    component: CreatorModelDetailComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'creator/statistics',
+    component: CreatorStatisticsComponent,
+    canActivate: [authGuard],
+  }
 ];

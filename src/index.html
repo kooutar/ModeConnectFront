@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..900&display=swap"
       rel="stylesheet"
     />
     <link
@@ -25,22 +25,62 @@
         theme: {
           extend: {
             colors: {
-              primary: '#db2777',
-              'background-light': '#ffffff',
-              'background-dark': '#ffffff',
-              'surface-dark': '#f8fafc',
-              'surface-light': '#ffffff',
-              'text-main': '#334155',
-              'text-heading': '#0f172a',
+              primary: {
+                DEFAULT: '#7f13ec',
+                hover: '#6810c1',
+                soft: 'rgba(127, 19, 236, 0.1)',
+                25: 'rgba(127, 19, 236, 0.25)',
+                30: 'rgba(127, 19, 236, 0.3)',
+              },
+              text: {
+                heading: '#0f172a',
+                main: '#334155',
+                muted: '#64748b',
+              },
+              background: {
+                light: '#ffffff',
+                soft: '#f8fafc',
+              },
+              surface: '#ffffff',
             },
             fontFamily: {
-              display: ['Manrope', 'sans-serif'],
+              display: ['Outfit', 'sans-serif'],
+              body: ['Outfit', 'sans-serif'],
+              sans: ['Outfit', 'sans-serif'],
             },
-            borderRadius: { DEFAULT: '0.25rem', lg: '0.5rem', xl: '0.75rem', full: '9999px' },
+            borderRadius: { 
+              DEFAULT: '0.5rem', 
+              'lg': '0.75rem',
+              'xl': '1rem', 
+              '2xl': '1.5rem',
+              'full': '9999px',
+            },
+            boxShadow: {
+              'primary-sm': '0 10px 15px -3px rgba(127, 19, 236, 0.1)',
+              'primary-md': '0 10px 20px rgba(127, 19, 236, 0.2)',
+              'primary-lg': '0 20px 25px -5px rgba(127, 19, 236, 0.1), 0 10px 10px -5px rgba(127, 19, 236, 0.04)',
+            }
           },
         },
       };
     </script>
+    <style>
+      :root {
+        --primary: #7f13ec;
+        --primary-hover: #6810c1;
+        --primary-soft: rgba(127, 19, 236, 0.1);
+        --text-heading: #0f172a;
+        --text-main: #334155;
+        --text-muted: #64748b;
+        --bg-main: #ffffff;
+        --bg-soft: #f8fafc;
+        --font-family: 'Outfit', sans-serif;
+      }
+      body {
+        font-family: var(--font-family);
+        color: var(--text-main);
+      }
+    </style>
   </head>
   <body class="bg-background-light font-display text-text-main antialiased overflow-x-hidden">
     <app-root></app-root>
