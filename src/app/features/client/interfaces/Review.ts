@@ -1,7 +1,7 @@
 export interface Review {
   id?: number;
   comment: string;
-  rating?: number;
+  rate: number;
   clientName?: string;
   createdAt?: string;
 }

@@ -44,8 +44,8 @@ describe('ModelListComponent', () => {
   });
 
   it('should load models on init', () => {
-    expect(component.models.length).toBe(1);
-    expect(component.models[0].name).toBe('Test Model');
+    expect(component.filteredModels.length).toBe(1);
+    expect(component.filteredModels[0].name).toBe('Test Model');
   });
 
   it('should set error message when service fails', async () => {

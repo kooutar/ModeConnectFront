@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
@@ -11,8 +11,8 @@ import { RegisterRequest } from '../../interfaces/RegistreRequest';
   templateUrl: './registration-component.html',
   styleUrls: ['./registration-component.css'],
 })
-export class RegistrationComponent {
-  registrationForm: FormGroup;
+export class RegistrationComponent implements OnInit {
+  registrationForm!: FormGroup;
   selectedRole: string = 'client';
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
@@ -22,6 +22,9 @@ export class RegistrationComponent {
     private fb: FormBuilder,
     private authService: AuthService,
   ) {
+    
+  }
+  ngOnInit(): void {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -48,7 +51,6 @@ export class RegistrationComponent {
   onSubmit(): void {
     if (this.registrationForm.valid) {
       console.log('Form submitted:', this.registrationForm.value);
-      // Call the register method from AuthService
       const registerData: RegisterRequest = {
         username: this.registrationForm.value.firstName + this.registrationForm.value.lastName, // ou une autre logique
         email: this.registrationForm.value.email,
@@ -92,11 +94,11 @@ export class RegistrationComponent {
 
   signInWithGoogle(): void {
     console.log('Sign in with Google');
-    // Implement Google OAuth
+   
   }
 
   signInWithApple(): void {
     console.log('Sign in with Apple');
-    // Implement Apple OAuth
+   
   }
 }

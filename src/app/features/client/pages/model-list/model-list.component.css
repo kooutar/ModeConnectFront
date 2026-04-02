@@ -1,34 +1,22 @@
-/* Model List Component Styles */
-
 :host {
   display: block;
   width: 100%;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .animate-spin {
   animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes filterIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.transition-shadow {
-  transition: box-shadow 0.3s ease-in-out;
-}
-
-.transition-colors {
-  transition: background-color 0.3s ease-in-out;
-}
-
-/* Model card styling */
-.model-card {
-  border: 1px solid #e2e8f0;
-  padding: 1rem;
-  border-radius: 0.5rem;
+.animate-filter-in {
+  animation: filterIn 0.3s ease-out forwards;
 }

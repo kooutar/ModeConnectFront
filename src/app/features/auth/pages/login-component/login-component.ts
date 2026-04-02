@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -11,8 +11,8 @@ import { AuthService } from '../../services/auth-service';
   templateUrl: './login-component.html',
   styleUrls: ['./login-component.css'],
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class LoginComponent implements OnInit {
+  loginForm!: FormGroup;
   showPassword: boolean = false;
   errorMessage: string | null = null; // holds server/client error text
 
@@ -21,6 +21,9 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
   ) {
+    
+  }
+  ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4)]],

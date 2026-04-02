@@ -1,8 +1,39 @@
-/* Import Google Fonts */
+/* ============================================================
+   ModeConnect — Global Styles
+   Tailwind CSS v4 + Design Tokens
+   ============================================================ */
+
+/* 1. Tailwind v4 — OBLIGATOIRE pour générer toutes les utilitaires */
+@import "tailwindcss";
+
+/* 2. Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
-/* Global styles */
+/* 3. Tokens de design custom — syntaxe Tailwind v4 (@theme) */
+@theme {
+  /* Couleurs custom disponibles via classes Tailwind : text-primary, bg-primary, etc. */
+  --color-primary: #7f13ec;
+  --color-primary-hover: #6810c1;
+  --color-primary-soft: rgba(127, 19, 236, 0.1);
+
+  /* Couleurs texte */
+  --color-text-heading: #0f172a;
+  --color-text-main: #334155;
+  --color-text-muted: #64748b;
+
+  /* Couleurs de fond */
+  --color-surface: #ffffff;
+  --color-background-soft: #f8fafc;
+
+  /* Bordures */
+  --color-border: #e2e8f0;
+
+  /* Police */
+  --font-display: 'Outfit', sans-serif;
+}
+
+/* 4. Variables CSS natives (pour les composants qui lisent var(--primary) etc.) */
 :root {
   --primary: #7f13ec;
   --primary-hover: #6810c1;
@@ -22,6 +53,7 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
+/* 5. Reset & base */
 body {
   margin: 0;
   font-family: var(--font-family);
@@ -35,6 +67,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
+/* 6. Material Symbols */
 .material-symbols-outlined {
   font-variation-settings:
     'FILL' 1,
@@ -43,42 +76,13 @@ h1, h2, h3, h4, h5, h6 {
     'opsz' 24;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
+/* 7. Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-soft); }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-soft);
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
-}
-
-/* Global Utility Classes (Fallback for non-tailwind components) */
-.btn-primary {
-  background-color: var(--primary);
-  color: white;
-  padding: 0.625rem 1.25rem;
-  border-radius: var(--radius-default);
-  font-weight: 600;
-  transition: all 0.2s;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
+/* 8. Carte générique */
 .card {
   background-color: var(--bg-main);
   border: 1px solid var(--border-color);
@@ -87,7 +91,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--shadow-sm);
 }
 
-/* Toast Notifications */
+/* 9. Toast Notifications (global — utilisé par plusieurs composants) */
 .toast-container {
   position: fixed;
   top: 1.5rem;
@@ -114,13 +118,8 @@ h1, h2, h3, h4, h5, h6 {
   animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.toast.success {
-  border-left: 4px solid #10b981;
-}
-
-.toast.error {
-  border-left: 4px solid #ef4444;
-}
+.toast.success { border-left: 4px solid #10b981; }
+.toast.error   { border-left: 4px solid #ef4444; }
 
 .toast-icon {
   display: flex;
@@ -129,9 +128,7 @@ h1, h2, h3, h4, h5, h6 {
   flex-shrink: 0;
 }
 
-.toast-content {
-  flex: 1;
-}
+.toast-content { flex: 1; }
 
 .toast-title {
   font-weight: 700;
@@ -147,23 +144,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
 }
 
 @keyframes fadeOut {
-  to {
-    opacity: 0;
-    transform: scale(0.95);
-  }
+  to { opacity: 0; transform: scale(0.95); }
 }
 
-.toast.fade-out {
-  animation: fadeOut 0.2s forwards;
-}
+.toast.fade-out { animation: fadeOut 0.2s forwards; }

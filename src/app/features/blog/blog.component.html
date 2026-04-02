@@ -1,0 +1,159 @@
+<app-navbar></app-navbar>
+
+<main class="min-h-screen bg-gray-50">
+  <section class="py-20 bg-white border-b border-gray-100">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-primary font-bold tracking-widest text-sm uppercase mb-4 block">Le Journal de la Mode</span>
+        <h1 class="text-5xl md:text-7xl font-black text-text-heading mb-8">Dernières tendances et <span class="text-primary">conseils</span> d'experts</h1>
+        <p class="text-xl text-text-muted leading-relaxed">
+          Plongez au cœur de l'inspiration mode avec nos stylistes préférés.
+        </p>
+      </div>
+
+      <!-- Featured Post -->
+      <div class="group relative overflow-hidden rounded-3xl bg-white aspect-[21/9] shadow-2xl shadow-gray-200/50 cursor-pointer">
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" 
+             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCXvVEaMb6tTcsUJ00ayillLlExPjU0jYBRKclRMlTpnrywu7UuCul2vqIDhlxvWV1sKNjxYqwnE6eumikJdcXXRHGEFBK5v4TbyJQtWLvslj1SHbz6hSwoIpU_xgfdPQf7ilagtJyrkVNN4PqUx_otw4CzmX-gOUZ-xetSYMThhZ5YhnBOguos6ivhWVcq0ib-Knt4zKWHNtn_ieRcqz3U9cFXeN50-s6G1W_I-DpAngh2-CWDf5XOzP_U_SXg6v7qijaQ56v2NTk9');">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 md:p-16 max-w-3xl w-full">
+          <span class="px-4 py-1 rounded-full bg-primary/90 text-white text-sm font-bold mb-6 inline-block">ÉDITION SPÉCIALE</span>
+          <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            Les 10 pièces indispensables de ce printemps 2024
+          </h2>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full border-2 border-white/20 bg-gray-200 bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDasJOvH2dtACA1u8QpWf9a1juIF8eUI9y96dP36P6VCIw3R6Pm9pdDDvGl9nS_KvW1SuIr9UnChsPVodAi0pJNS34fti3dW56Pf6iGV0SF69S6201jAa3Jkg1r8x5TwJtB12hVXcIjwbg2NLrEsc5Xk7rrbKLGzwAL6x-KFI9XaqGi5_zSHCXt2bNBaVXqw58rnQYOMcOfILGp-MtI3CHXl9smvvTTNOUyRfy8No7KFn7g8jE_1WpoaEQY7d1s9Lj6bEuzo8csS8To');"></div>
+            <div>
+              <p class="text-white font-bold">Sophie Martinez</p>
+              <p class="text-white/60 text-sm">Il y a 2 jours • 5 min de lecture</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Grid -->
+  <section class="py-24">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between mb-12">
+        <h3 class="text-3xl font-black text-text-heading">Articles récents</h3>
+        <div class="flex gap-4">
+          <button class="h-10 px-6 rounded-full bg-white border border-gray-100 text-sm font-bold text-primary shadow-sm hover:shadow-md transition-all">Tous</button>
+          <button class="h-10 px-6 rounded-full bg-white border border-gray-100 text-sm font-bold text-text-muted hover:border-primary hover:text-primary transition-all">Tendances</button>
+          <button class="h-10 px-6 rounded-full bg-white border border-gray-100 text-sm font-bold text-text-muted hover:border-primary hover:text-primary transition-all">Conseils</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <!-- Post 1 -->
+        <article class="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500">
+          <div class="aspect-[4/3] overflow-hidden relative cursor-pointer">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj3t-zVXjVsbUcPTOGAxt5rgO_ZHxEgt-8atZNQX5wFYtAMMxfhzK8_z858_tqhCNY3UvMTNcXEFfh0TIaZxz204drnFmBA8mZa2_ku7mYA9pFQ9iStSIf-SUpmQirobYI1lZ5iNV32AEbX76WKALq9tiQdcOCNpWxvv1t-N1qh0vxtNNLIL5gZ4dTFLrIvnD3LLzzFR4Hqo5rTYOrll3ttP210xvyUNAA3465BuUZf34YVEqTwFk2b-MRKjegukOC2T7xCl38F9HD" 
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Article image">
+            <span class="absolute top-6 left-6 px-4 py-1 rounded-full bg-white/90 backdrop-blur-md text-xs font-black text-primary shadow-lg">CONSEILS</span>
+          </div>
+          <div class="p-8">
+            <p class="text-text-muted text-sm font-bold mb-4">24 AVRIL 2024</p>
+            <h4 class="text-2xl font-bold text-text-heading mb-4 hover:text-primary cursor-pointer transition-colors leading-snug">
+              Comment associer les couleurs sans faire de faute de goût
+            </h4>
+            <p class="text-text-muted mb-8 line-clamp-2">
+              Maîtriser le cercle chromatique n'est pas réservé aux artistes. Découvrez nos astuces simples.
+            </p>
+            <div class="flex items-center justify-between border-t border-gray-50 pt-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gray-100 bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6MEN8mmrI-Ea9xbfxgOs1dPntPcqRySJ8VyXY4_74Ak1a_fMJWPWFrNCq93TGg6hR2yk6sP7CADWEezoyJbbRt3IAIDKpSvJq28CFHw0PKm_sWSowfGTESJiGkrmuNeuObrPgucMBW4doTBXlJcuoaXwhnuVO-5SIWgZ5KH2GC9NmkGL2W1e40TYZ5XWXHgu5GcWqZqbI7Ad1wSYk3P3xWZeTe4Q3slC27HsLdQSVnfY_KWGGgwQlhGouszeoXye6C0oiHDWETBdg');"></div>
+                <span class="text-sm font-bold text-text-main">Marc Dubois</span>
+              </div>
+              <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 2 -->
+        <article class="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500">
+          <div class="aspect-[4/3] overflow-hidden relative cursor-pointer">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbMwTMCsSLUoYlm0WF4zj2bf02m0VZPj9UlfJ_GzJaVUh8WJLtgBOCMzkvKSUbd7K6RPCQjzr7Nz4od4PUo6ZztxGOzQ91OVYn5O4oHi2DtYyP1arQgeCLmopLOqz_jH5nGCaeIveMCFWMQUMm9lK1TBTIGqbj40EjHCcUAZfgz0ljf-9L1XWL4pIVjnkn5lOLd5Ddj2BecbxeNamCkyEVwVYAAwoV8tkQZOtYKHwMEPZBw3ITXwXmGIXJJkt3Meg78hH73VZXsktE" 
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Article image">
+            <span class="absolute top-6 left-6 px-4 py-1 rounded-full bg-white/90 backdrop-blur-md text-xs font-black text-primary shadow-lg">TENDANCES</span>
+          </div>
+          <div class="p-8">
+            <p class="text-text-muted text-sm font-bold mb-4">22 AVRIL 2024</p>
+            <h4 class="text-2xl font-bold text-text-heading mb-4 hover:text-primary cursor-pointer transition-colors leading-snug">
+              Le retour triomphal de l'esthétique minimaliste des années 90
+            </h4>
+            <p class="text-text-muted mb-8 line-clamp-2">
+              Moins c'est plus. Analyse d'un retour aux sources qui redéfinit le luxe moderne.
+            </p>
+            <div class="flex items-center justify-between border-t border-gray-50 pt-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gray-100 bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA73v3NW8hpDn_O8XfZV2FzcsL-rRvKmgkWOXLozLLSa_hOzT-msnoEslKG22R5vpxYl04U25gjAOzXtKiHdr14Ga0QlHxAwjwKsvbl47iSDlw9qicwKX5z9_p-9xDXxejcIQAOLkdxzl4brKk5CWireVqNX1tmKErgBVbteflnj_7At5BkrzHl5xVS1D8OFgofwm6ACHaX2z5oIgFESeytk4ZmXZT8-ynLauklUmwYgcSuSMSc5a69zGfqlSJbDPWrt-NzkMdCBw00');"></div>
+                <span class="text-sm font-bold text-text-main">Elena Rossi</span>
+              </div>
+              <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500">
+          <div class="aspect-[4/3] overflow-hidden relative cursor-pointer">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqf5UD1LLEO_U1cEIqXFa9W5Bu3JHju-QrTfp0wjnZxS0VKeQgflQYJLObkgnJEnvmx00ZcdcxGPLS5lL5CE0Gg1DHQZr7fhrZTWIVfgaAFEhIPIC0-MS3yBNzpBHVaG0rSGpTKna202SvTkMjfhrvmbyuq9SPs8xZ0zg50P5yBXwH2uFeLQajuAPtGFBTYhIfDVttpqNLZ_7J54yX8lKq-AGo5iZBEZqq18IbQyimNiVKLD1QdUymKjhLDOoM96nX7oMYH5A-tFAN" 
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Article image">
+            <span class="absolute top-6 left-6 px-4 py-1 rounded-full bg-white/90 backdrop-blur-md text-xs font-black text-primary shadow-lg">SÉLECTIONS</span>
+          </div>
+          <div class="p-8">
+            <p class="text-text-muted text-sm font-bold mb-4">20 AVRIL 2024</p>
+            <h4 class="text-2xl font-bold text-text-heading mb-4 hover:text-primary cursor-pointer transition-colors leading-snug">
+              Comment bien choisir sa robe de mariée selon son style de vie
+            </h4>
+            <p class="text-text-muted mb-8 line-clamp-2">
+              Conseils pratiques pour concilier confort et élégance pour le plus beau jour de votre vie.
+            </p>
+            <div class="flex items-center justify-between border-t border-gray-50 pt-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gray-100 bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdqRpzRPwb4yNR0p8bwXULmfCekF_sAnn1zeQe6fzFRXZNRV32-OMMvlumSDmsaHQoLbcQK4MHWjY_3Q-NhvxDbKzxON8ilgiJsDjB5WGg8G1_SmTtdylvIIxJqwzetzvUoRwyvdmZegJVnBl-DEcztrHlItAZYh0RTy8N7CDKQ38PYe10edJcWFljYbeoq6zDlq0ic2BTL9TvTHfvVL_0xhR4d8db5K7i8UE-2p29f9bLjIsg_QiVYaFfowAeIjMVkCmKbFdEu82e');"></div>
+                <span class="text-sm font-bold text-text-main">Claire D.</span>
+              </div>
+              <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      
+      <div class="mt-20 flex justify-center">
+        <button class="h-14 px-12 rounded-2xl bg-white border-2 border-primary text-primary text-lg font-black hover:bg-primary hover:text-white transition-all shadow-lg hover:shadow-primary/20">
+          Charger plus d'articles
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="py-24 bg-white border-t border-gray-100 relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-4xl mx-auto bg-gray-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+        
+        <h3 class="text-3xl md:text-5xl font-black text-white mb-6">Ne manquez aucune tendance</h3>
+        <p class="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
+          Rejoignez 50,000+ passionnés et recevez nos meilleurs conseils styling chaque semaine directement dans votre boîte mail.
+        </p>
+        <div class="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
+          <input type="email" placeholder="votre@email.com" class="flex-1 h-14 rounded-2xl bg-white/10 border border-white/20 px-8 text-white focus:outline-none focus:ring-2 focus:ring-primary text-lg transition-all">
+          <button class="h-14 px-10 rounded-2xl bg-primary text-white text-lg font-bold hover:bg-primary-hover transition-all transform hover:scale-105 shadow-xl shadow-primary/25">
+            S'abonner
+          </button>
+        </div>
+        <p class="text-gray-500 text-sm mt-6">Zéro spam. Uniquement de l'inspiration. Désabonnez-vous quand vous voulez.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<app-footer></app-footer>

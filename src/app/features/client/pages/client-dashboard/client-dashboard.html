@@ -41,12 +41,12 @@
       </a>
       <a
         class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
-        href="#"
+        routerLink="/orders"
       >
         <span class="material-symbols-outlined group-hover:text-primary transition-colors"
-          >calendar_month</span
+          >receipt_long</span
         >
-        <span class="text-sm font-medium">Mes Réservations</span>
+        <span class="text-sm font-medium">Mes Commandes</span>
       </a>
       <a
         class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group justify-between"
@@ -172,6 +172,7 @@
             <div>
               <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total dépensé</p>
               <p class="text-3xl font-bold mt-1">450€</p>
+            </div>
           </div>
         </div>
         <div class="space-y-4">
@@ -246,99 +247,7 @@
             </div>
           }
         </div>
-        <div class="flex flex-col gap-4">
-         
-            <div class="flex items-center justify-between px-1">
-              <h2 class="text-xl font-bold">Mes commandes</h2>
-            </div>
 
-            @if (ordersLoading) {
-              <div class="flex justify-center py-8">
-                <p>Chargement en cours...</p>
-                <div
-                  class="spinner-mini"
-                  style="border-top-color: var(--primary); width: 24px; height: 24px"
-                ></div>
-              </div>
-            } @else if (ordersError) {
-              <div class="p-4 bg-red-50 text-red-600 rounded-xl border border-red-200">
-                <p>{{ ordersError }}</p>
-              </div>
-            } @else if (orders.length === 0) {
-              <div
-                class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center text-slate-500"
-              >
-                <p>Vous n'avez encore passé aucune commande.</p>
-              </div>
-            } @else {
-              <div
-                class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto"
-              >
-                <table class="min-w-full text-sm">
-                  <thead class="bg-slate-50 dark:bg-slate-800/40 text-left">
-                    <tr>
-                      <th class="px-4 py-3 font-semibold text-slate-500">#</th>
-                      <th class="px-4 py-3 font-semibold text-slate-500">Modèle</th>
-                      <th class="px-4 py-3 font-semibold text-slate-500">Type</th>
-                      <th class="px-4 py-3 font-semibold text-slate-500">Jours</th>
-                      <th class="px-4 py-3 font-semibold text-slate-500">Date réservation</th>
-                      <th class="px-4 py-3 font-semibold text-slate-500">Statut</th>
-                      <th class="px-4 py-3 font-semibold text-slate-500">Créée le</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @for (order of orders; track order.id) {
-                      <tr class="border-t border-slate-100 dark:border-slate-800">
-                        <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
-                          {{ order.id }}
-                        </td>
-                        <td class="px-4 py-2 font-medium">
-                          {{ order.modelName }}
-                        </td>
-                        <td class="px-4 py-2">
-                          <span
-                            class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
-                            [ngClass]="{
-                              'bg-emerald-100 text-emerald-700': order.orderType === 'PURCHASE',
-                              'bg-indigo-100 text-indigo-700': order.orderType === 'RENTAL',
-                            }"
-                          >
-                            {{ order.orderType }}
-                          </span>
-                        </td>
-                        <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
-                          {{ order.reservation_days || '-' }}
-                        </td>
-                        <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
-                          {{ order.reservationDate || '-' }}
-                        </td>
-                        <td class="px-4 py-2">
-                          <span
-                            class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
-                            [ngClass]="{
-                              'bg-emerald-100 text-emerald-700': order.status === 'ACCEPTED',
-                              'bg-amber-100 text-amber-700': order.status === 'PENDING',
-                              'bg-red-100 text-red-700': order.status === 'REJECTED',
-                            }"
-                          >
-                            {{ order.status }}
-                          </span>
-                        </td>
-                        <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
-                          {{ order.createdAt | date: 'short' }}
-                        </td>
-                      </tr>
-                    }
-                  </tbody>
-                </table>
-              </div>
-            }
-          
-        </div>
-
-
-        
-        </div>
       </div>
     </div>
   </main>

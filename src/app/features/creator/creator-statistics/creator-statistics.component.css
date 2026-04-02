@@ -1,22 +1,16 @@
-/* Animations pour un rendu premium */
+/* Animation d'entrée premium */
 .animate-in {
   animation: slideInBottom 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
 @keyframes slideInBottom {
   from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Transition fluide pour les cercles SVG */
 circle {
-  transition: stroke-dasharray 1.5s cubic-bezier(0.165, 0.84, 0.44, 1), 
-              stroke-dashoffset 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.bg-surface-light {
-  background: white;
-}
-
-.bg-surface-dark {
-  background: #0f172a;
+  transition:
+    stroke-dasharray 1.5s cubic-bezier(0.165, 0.84, 0.44, 1),
+    stroke-dashoffset 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }

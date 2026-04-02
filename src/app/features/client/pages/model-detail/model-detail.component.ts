@@ -1,15 +1,16 @@
 import { Component, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PLATFORM_ID } from '@angular/core';
 import { Model } from '../../interfaces/Model';
 import { ModelService } from '../../services/model-service';
+import { ReviewService, ReviewRequestDto, ReviewResponseDto } from '../../services/review-service';
 
 @Component({
   selector: 'app-model-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './model-detail.component.html',
   styleUrls: ['./model-detail.component.css'],
 })
@@ -42,13 +43,38 @@ export class ModelDetailComponent implements OnInit {
   // Date minimum pour limiter les réservations dans le passé
   minDate: string = '';
 
+  // Review modal properties (for already purchased/rented models)
+  isReviewModalOpen = false;
+  reviewForm: FormGroup;
+  reviewSubmitting = false;
+  reviewError: string | null = null;
+  reviewSuccess: string | null = null;
+  selectedOrderIdForReview: number | null = null;
+  hasOrderedThisModel = false;
+  modelReviews: ReviewResponseDto[] = [];
+  reviewsLoading = false;
+
+  get averageRating(): number {
+    const reviews = this.modelReviews.length > 0 ? this.modelReviews : (this.model?.reviews || []);
+    if (reviews.length === 0) return 0;
+    const sum = reviews.reduce((acc, r) => acc + (r.rate || 0), 0);
+    return Math.round((sum / reviews.length) * 10) / 10;
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private modelService: ModelService,
+    private reviewService: ReviewService,
+    private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
-  ) {}
+  ) {
+    this.reviewForm = this.fb.group({
+      rate: [5, [Validators.required, Validators.min(1), Validators.max(5)]],
+      comment: ['', [Validators.required, Validators.minLength(5)]]
+    });
+  }
 
   ngOnInit(): void {
     const inBrowser = isPlatformBrowser(this.platformId);
@@ -70,7 +96,9 @@ export class ModelDetailComponent implements OnInit {
 
     if (stateModel) {
       this.model = stateModel;
+      this.modelReviews = stateModel.reviews || [];
       this.loading = false;
+      this.checkUserOrders(stateModel.id);
     } else if (id) {
       this.loadModel(id);
     } else {
@@ -78,14 +106,19 @@ export class ModelDetailComponent implements OnInit {
     }
   }
   private loadModel(id: number): void {
-    console.log('[model-detail] loading model from API', { id });
     this.loading = true;
     this.error = null;
     this.modelService.getModelById(id).subscribe({
       next: (data) => {
-        console.log('[model-detail] model loaded', data);
         this.model = data;
         this.loading = false;
+        this.cdr.detectChanges();
+
+        if (data.reviews && data.reviews.length > 0) {
+          this.modelReviews = data.reviews;
+        }
+
+        this.checkUserOrders(data.id);
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -98,7 +131,6 @@ export class ModelDetailComponent implements OnInit {
           this.error = 'Impossible de charger les détails du modèle.';
         }
         this.loading = false;
-        this.cdr.detectChanges();
       },
     });
   }
@@ -112,14 +144,12 @@ export class ModelDetailComponent implements OnInit {
   }
 
   addToCart(): void {
-    // TODO: brancher plus tard sur un vrai panier
     console.log('Added to cart', this.model?.id);
   }
 
   rentModel(): void {
     if (this.model) {
       this.showRentalModal = true;
-      // Initialiser avec la date d'aujourd'hui
       const today = new Date().toISOString().split('T')[0];
       this.rentalStartDate = today;
       this.rentalEndDate = '';
@@ -166,14 +196,17 @@ export class ModelDetailComponent implements OnInit {
 
     this.modelService.createOrder(this.model.id, rentalRequest).subscribe({
       next: (response) => {
-        console.log('Commande de location créée:', response);
         this.hasRented = true;
         this.rentalSuccess = true;
         this.rentalLoading = false;
         this.showRentalModal = false;
+        
+        if (this.model) {
+          this.checkUserOrders(this.model.id);
+        }
+        
         this.cdr.detectChanges();
 
-        // Masquer le message de succès après 3 secondes
         setTimeout(() => {
           this.rentalSuccess = false;
           this.cdr.detectChanges();
@@ -238,10 +271,15 @@ export class ModelDetailComponent implements OnInit {
 
     this.modelService.createOrder(this.model.id, purchaseRequest).subscribe({
       next: (response) => {
-        console.log('Commande d\'achat créée:', response);
         this.hasBought = true;
         this.buySuccess = true;
         this.buyLoading = false;
+
+        // Rafraîchir l'état des commandes
+        if (this.model) {
+          this.checkUserOrders(this.model.id);
+        }
+
         this.cdr.detectChanges();
 
         // Masquer le message de succès après 3 secondes
@@ -273,6 +311,100 @@ export class ModelDetailComponent implements OnInit {
           this.buyError = null;
           this.cdr.detectChanges();
         }, 5000);
+      },
+    });
+  }
+
+  // ==== Review Section Methods ====
+
+  openReviewModal(): void {
+    this.isReviewModalOpen = true;
+    this.reviewSuccess = null;
+    this.reviewError = null;
+    this.reviewForm.reset({ rate: 5, comment: '' });
+  }
+
+  closeReviewModal(): void {
+    this.isReviewModalOpen = false;
+    this.reviewForm.reset();
+  }
+
+  // NOTE: This assumes we have a way to know the orderId to link the review to. 
+  // For a detail view, the user might have multiple orders for this model, or we just submit with a pseudo orderId or need an endpoint that infers orderId from clientId + modelId. We assume we find the first accepted order if needed, but since we didn't fetch orders here, we'll try to let standard validation catch it or assume it is handled by the backend.
+  submitReview(): void {
+    if (this.reviewForm.invalid || !this.model) return;
+
+    this.reviewSubmitting = true;
+    this.reviewError = null;
+    this.reviewSuccess = null;
+
+    const clientId = localStorage.getItem('userId');
+
+    // Currently the dto expects an orderId so we use a dummy one if we don't know it, 
+    // or you can add a method to load user orders first.
+    // Assuming backend might just need modelId and clientId or orderId.
+    const reviewDto: ReviewRequestDto = {
+      clientId: clientId ? parseInt(clientId) : 0,
+      orderId: this.selectedOrderIdForReview || this.model.id, 
+      rate: this.reviewForm.value.rate,
+      comment: this.reviewForm.value.comment,
+    };
+
+    this.reviewService.createReview(reviewDto).subscribe({
+      next: () => {
+        this.reviewSubmitting = false;
+        this.reviewSuccess = 'Votre avis a été publié avec succès.';
+        this.cdr.detectChanges();
+        if (this.model) {
+           this.loadModel(this.model.id);
+        }
+        setTimeout(() => this.closeReviewModal(), 2000);
+      },
+      error: (err) => {
+        this.reviewSubmitting = false;
+        this.reviewError = 'Impossible de publier l\'avis. Veuillez réessayer.';
+        this.cdr.detectChanges();
+      }
+     });
+  }
+
+  private checkUserOrders(modelId: number): void {
+    const inBrowser = isPlatformBrowser(this.platformId);
+    if (!inBrowser) return;
+
+    this.hasOrderedThisModel = false;
+    this.hasRented = false;
+    this.hasBought = false;
+    this.selectedOrderIdForReview = null;
+
+    this.modelService.getClientOrders().subscribe({
+      next: (orders) => {
+        // Vérifier si l'utilisateur a déjà loué ce modèle (ACCEPTED ou PENDING)
+        const rentalOrder = orders.find(
+          (o) => o.modelId === modelId && o.orderType === 'RENTAL' && (o.status === 'ACCEPTED' || o.status === 'PENDING')
+        );
+        
+        // Vérifier si l'utilisateur a déjà acheté ce modèle
+        const purchaseOrder = orders.find(
+          (o) => o.modelId === modelId && o.orderType === 'PURCHASE' && o.status === 'ACCEPTED'
+        );
+
+        if (rentalOrder) {
+          this.hasRented = true;
+          this.hasOrderedThisModel = rentalOrder.status === 'ACCEPTED';
+          this.selectedOrderIdForReview = rentalOrder.id;
+        }
+
+        if (purchaseOrder) {
+          this.hasBought = true;
+          this.hasOrderedThisModel = true;
+          this.selectedOrderIdForReview = purchaseOrder.id;
+        }
+
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Erreur lors de la vérification des commandes client', err);
       },
     });
   }

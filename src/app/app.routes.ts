@@ -12,6 +12,9 @@ import { CreatorOrdersComponent } from './features/creator/creator-orders/creato
 
 import { CreatorModelDetailComponent } from './features/creator/creator-model-detail/creator-model-detail.component';
 import { CreatorStatisticsComponent } from './features/creator/creator-statistics/creator-statistics.component';
+import { ClientOrdersComponent } from './features/client/pages/client-orders/client-orders.component';
+import { ServiceComponent } from './features/service/service.component';
+import { BlogComponent } from './features/blog/blog.component';
 
 export const routes: Routes = [
   {
@@ -29,6 +32,11 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: ClientDashboardComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'orders',
+    component: ClientOrdersComponent,
     canActivate: [authGuard],
   },
   {
@@ -60,5 +68,13 @@ export const routes: Routes = [
     path: 'creator/statistics',
     component: CreatorStatisticsComponent,
     canActivate: [authGuard],
+  },
+  {
+    path: 'services',
+    component: ServiceComponent,
+  },
+  {
+    path: 'blog',
+    component: BlogComponent,
   }
 ];

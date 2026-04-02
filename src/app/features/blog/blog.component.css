@@ -1,0 +1,11 @@
+/* blog.component.css */
+
+/* line-clamp-2 : Tailwind v4 l'a nativement via la classe 'line-clamp-2'
+   Gardé ici comme fallback pour les navigateurs anciens */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

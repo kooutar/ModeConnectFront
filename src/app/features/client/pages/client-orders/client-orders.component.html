@@ -1,0 +1,212 @@
+<div class="flex h-screen w-full overflow-hidden">
+  <aside
+    class="hidden w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-surface-dark lg:flex overflow-y-auto"
+  >
+    <div
+      class="flex flex-col items-center gap-4 p-8 border-b border-slate-200 dark:border-slate-800"
+    >
+      <div class="relative">
+        <div
+          class="size-20 rounded-full bg-cover bg-center border-2 border-primary p-0.5"
+          data-alt="Portrait of a smiling woman, the user Sophie Martin"
+          style="
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAkGzFCCQvwtBwi7yb77h1Cov3af4k-hNc-8r3bZLK_lsdrsooei-PPuopRHf18zas4xU4H8S7t-2jKHNiRrLAVzpmducA0Fy2LvFjLDbekA-x5axwkH-6AFRRr9jslroaBDi1FJzGfr-VfHLVXd7ynI-JyzdSSfnaCGAIylkrerbVnM-zsYEXS38sDJrfWNw6GYqPIsMU6P3nlJlbg4kzum2yFaSAh7OtZqJWRNx3wjo-ehReHqKUjVGG8_GRtmsepLaLMSfiyaGYK');
+          "
+        ></div>
+        <div
+          class="absolute bottom-0 right-0 size-5 rounded-full bg-green-500 border-2 border-surface-light dark:border-surface-dark"
+        ></div>
+      </div>
+      <div class="text-center">
+        <h2 class="text-lg font-black leading-tight text-text-heading">{{ username }}</h2>
+        <p class="text-text-muted text-sm font-medium">Membre Premium</p>
+      </div>
+    </div>
+    <nav class="flex-1 flex flex-col gap-2 p-4">
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+        routerLink="/dashboard"
+      >
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+        <span class="text-sm font-medium">Tableau de bord</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+        routerLink="/models"
+      >
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+          >view_list</span
+        >
+        <span class="text-sm font-medium">Nos Modèles</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-lg shadow-primary/25 transition-all"
+        routerLink="/orders"
+      >
+        <span class="material-symbols-outlined fill-1"
+          >receipt_long</span
+        >
+        <span class="text-sm font-bold">Mes Commandes</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group justify-between"
+        href="#"
+      >
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+            >chat_bubble</span
+          >
+          <span class="text-sm font-medium">Messagerie</span>
+        </div>
+        <span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+        href="#"
+      >
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+          >favorite</span
+        >
+        <span class="text-sm font-medium">Favoris</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+        href="#"
+      >
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+          >person</span
+        >
+        <span class="text-sm font-medium">Mon Profil</span>
+      </a>
+      <a
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group"
+        href="#"
+      >
+        <span class="material-symbols-outlined group-hover:text-primary transition-colors"
+          >settings</span
+        >
+        <span class="text-sm font-medium">Paramètres</span>
+      </a>
+    </nav>
+    <div class="p-4 mt-auto">
+      <button
+        (click)="logout()"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-900/10 hover:text-red-600 dark:hover:text-red-400 transition-colors w-full text-left"
+      >
+        <span class="material-symbols-outlined">logout</span>
+        <span class="text-sm font-medium">Déconnexion</span>
+      </button>
+    </div>
+  </aside>
+  <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+    <header
+      class="lg:hidden flex items-center justify-between p-4 bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="size-10 rounded-full bg-cover bg-center"
+          data-alt="User profile picture"
+          style="
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5qSGI_5VRJyHkhIMegKihjFDuX33JOK1JLqVU3RWmzvAPte__jyayl2sz6SR0WHKSf74HfwvnxAk3IOfHxC3lMwq8xa9dVtb8ogaSO49S-P0vtrSyTy-wA90N7l8nilksNI6NvpVl-mBPORf0C98NqpQA64D_2HIZ3fIxHcF3XaR6mx4jGBaWOLtEtIQt8YTATx1ikfXHDTfSi1ZgAx6nDB7dDsr4avwzA2ozZ69xMT2W39j2gMTUGo0nqZV-ahKRseXCa2GUgsJr');
+          "
+        ></div>
+        <span class="font-bold text-lg">Mes Commandes</span>
+      </div>
+      <button class="text-text-heading">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </header>
+    <div class="flex-1 overflow-y-auto p-4 lg:p-10 scroll-smooth">
+      <div class="max-w-6xl mx-auto space-y-8">
+        
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center justify-between px-1">
+            <h2 class="text-3xl lg:text-4xl font-black text-text-heading">Mes commandes</h2>
+          </div>
+
+          @if (ordersLoading) {
+            <div class="flex justify-center py-8">
+              <p>Chargement en cours...</p>
+              <div
+                class="spinner-mini ml-3"
+                style="border-top-color: var(--primary); width: 24px; height: 24px"
+              ></div>
+            </div>
+          } @else if (ordersError) {
+            <div class="p-4 bg-red-50 text-red-600 rounded-xl border border-red-200">
+              <p>{{ ordersError }}</p>
+            </div>
+          } @else if (orders.length === 0) {
+            <div
+              class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center text-slate-500"
+            >
+              <p>Vous n'avez encore passé aucune commande.</p>
+            </div>
+          } @else {
+            <div
+              class="bg-surface-light dark:bg-surface-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto"
+            >
+              <table class="min-w-full text-sm">
+                <thead class="bg-slate-50 dark:bg-slate-800/40 text-left">
+                  <tr>
+                    <th class="px-4 py-3 font-semibold text-slate-500">#</th>
+                    <th class="px-4 py-3 font-semibold text-slate-500">Modèle</th>
+                    <th class="px-4 py-3 font-semibold text-slate-500">Type</th>
+                    <th class="px-4 py-3 font-semibold text-slate-500">Jours</th>
+                    <th class="px-4 py-3 font-semibold text-slate-500">Date réservation</th>
+                    <th class="px-4 py-3 font-semibold text-slate-500">Statut</th>
+                    <th class="px-4 py-3 font-semibold text-slate-500">Créée le</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (order of orders; track order.id) {
+                    <tr class="border-t border-slate-100 dark:border-slate-800">
+                      <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
+                        {{ order.id }}
+                      </td>
+                      <td class="px-4 py-2 font-medium">
+                        {{ order.modelName }}
+                      </td>
+                      <td class="px-4 py-2">
+                        <span
+                          class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
+                          [ngClass]="{
+                            'bg-emerald-100 text-emerald-700': order.orderType === 'PURCHASE',
+                            'bg-indigo-100 text-indigo-700': order.orderType === 'RENTAL'
+                          }"
+                        >
+                          {{ order.orderType }}
+                        </span>
+                      </td>
+                      <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
+                        {{ order.reservation_days || '-' }}
+                      </td>
+                      <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
+                        {{ order.reservationDate || '-' }}
+                      </td>
+                      <td class="px-4 py-2">
+                        <span
+                          class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
+                          [ngClass]="{
+                            'bg-emerald-100 text-emerald-700': order.status === 'ACCEPTED',
+                            'bg-amber-100 text-amber-700': order.status === 'PENDING',
+                            'bg-red-100 text-red-700': order.status === 'REJECTED'
+                          }"
+                        >
+                          {{ order.status }}
+                        </span>
+                      </td>
+                      <td class="px-4 py-2 text-slate-600 dark:text-slate-300">
+                        {{ order.createdAt | date: 'short' }}
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,5 +1,5 @@
 import { Media } from './Media';
-import { Review } from './Review';
+import { ReviewResponseDto } from '../services/review-service';
 
 export interface Model {
   id: number;
@@ -11,5 +11,6 @@ export interface Model {
   creatorName: string;
   available: boolean;
   mediaList: Media[];
-  reviews?: Review[];
+  reviews?: ReviewResponseDto[];
+  averageRating?: number;
 }

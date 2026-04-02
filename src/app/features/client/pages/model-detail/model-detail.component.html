@@ -69,8 +69,8 @@
               <span class="price">{{ m.rentalPrice | currency: 'EUR' }}</span>
               <div class="rating">
                 <span class="material-symbols-outlined star-icon">star</span>
-                <span class="rating-value">4.9</span>
-                <span class="rating-count">(48 avis)</span>
+                <span class="rating-value">{{ averageRating > 0 ? averageRating : 'N/A' }}</span>
+                <span class="rating-count">({{ modelReviews.length }} avis)</span>
               </div>
             </div>
           </div>
@@ -175,12 +175,16 @@
             <button
               (click)="rentModel()"
               class="btn-primary rent-btn"
-              [disabled]="hasRented"
-              [class.btn-disabled]="hasRented"
+              [disabled]="hasRented || hasBought || !model.available"
+              [class.btn-disabled]="hasRented || hasBought || !model.available"
             >
               <span class="material-symbols-outlined">calendar_month</span>
               <span>
-                 {{ hasRented ? 'Déjà réservé' : 'Louer - ' + (model.rentalPrice | currency: 'EUR') }}
+                 {{ 
+                    hasBought ? 'Propriétaire' :
+                    (!model.available ? 'Indisponible' : 
+                    (hasRented ? 'Déjà réservé' : 'Louer - ' + (model.rentalPrice | currency: 'EUR'))) 
+                 }}
               </span>
             </button>
             <button 
@@ -208,14 +212,16 @@
                <span>{{ isInWishlist ? 'Enregistré' : 'Enregistrer dans ma liste' }}</span>
              </button>
 
-             <button
-               [routerLink]="['/chat', model.creatorId]"
-               [queryParams]="{ creatorName: model.creatorName }"
-               class="btn-secondary message-btn"
-             >
-               <span class="material-symbols-outlined">chat_bubble</span>
-               <span>Démarrer conversation</span>
-             </button>
+
+             @if (hasOrderedThisModel) {
+               <button
+                 (click)="openReviewModal()"
+                 class="btn-secondary review-btn"
+               >
+                 <span class="material-symbols-outlined">reviews</span>
+                 <span>Laisser un avis</span>
+               </button>
+             }
            </div>
 
           <!-- Informations supplémentaires -->
@@ -228,6 +234,57 @@
               <span class="material-symbols-outlined info-icon">replay</span>
               <span>Retours gratuits</span>
             </div>
+          </div>
+
+          <!-- Section Avis et Commentaires -->
+          <div class="reviews-section mt-12 pt-8 border-t border-slate-100">
+            <div class="flex items-center justify-between mb-8">
+              <div class="flex items-center gap-3">
+                <h2 class="text-2xl font-black text-slate-800">Avis clients</h2>
+                <div class="flex items-center bg-amber-50 px-3 py-1 rounded-full">
+                  <span class="material-symbols-outlined text-amber-500 text-lg">star</span>
+                  <span class="text-amber-700 font-bold ml-1">{{ averageRating > 0 ? averageRating : 'N/A' }}</span>
+                </div>
+              </div>
+              <span class="text-slate-500 font-medium">{{ modelReviews.length }} avis</span>
+            </div>
+
+            @if (reviewsLoading) {
+              <div class="flex justify-center py-12">
+                <span class="spinner-mini" style="width: 32px; height: 32px"></span>
+              </div>
+            } @else if (modelReviews.length === 0) {
+              <div class="bg-slate-50 rounded-2xl p-10 text-center border-2 border-dashed border-slate-200">
+                <span class="material-symbols-outlined text-slate-300 text-5xl mb-3">rate_review</span>
+                <p class="text-slate-500 font-medium italic">Aucun avis pour le moment. Soyez le premier à en laisser un !</p>
+              </div>
+            } @else {
+              <div class="space-y-6">
+                @for (review of modelReviews; track review.id) {
+                  <div class="review-card bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-hover hover:shadow-md">
+                    <div class="flex justify-between items-start mb-4">
+                      <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                          {{ (review.clientName || 'U')[0] }}
+                        </div>
+                        <div>
+                          <p class="font-bold text-slate-800">{{ review.clientName || 'Utilisateur' }}</p>
+                          <p class="text-xs text-slate-400 font-medium">{{ review.createdAt | date:'longDate' }}</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-1 bg-amber-50 px-2 py-0.5 rounded-lg">
+                        @for (star of [1,2,3,4,5]; track star) {
+                          <span class="material-symbols-outlined text-[16px]" [class.text-amber-400]="star <= review.rate" [class.text-slate-200]="star > review.rate">star</span>
+                        }
+                      </div>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed font-medium">
+                      {{ review.comment }}
+                    </p>
+                  </div>
+                }
+              </div>
+            }
           </div>
         </div>
       </div>
@@ -319,6 +376,92 @@
             <span>Confirmer la réservation</span>
           }
         </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Review Modal -->
+@if (isReviewModalOpen) {
+  <div class="modal-overlay" (click)="closeReviewModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">Rédiger un avis</h2>
+        <button class="modal-close-btn" (click)="closeReviewModal()">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body p-6">
+        <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+          @if (reviewSuccess) {
+            <div class="mb-4 p-4 text-sm text-green-700 bg-green-50 rounded-xl border border-green-200">
+              {{ reviewSuccess }}
+            </div>
+          }
+          @if (reviewError) {
+            <div class="mb-4 p-4 text-sm text-red-700 bg-red-50 rounded-xl border border-red-200">
+              {{ reviewError }}
+            </div>
+          }
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-bold text-slate-800 mb-2">Note (sur 5)</label>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-amber-400">star</span>
+                <input
+                  type="number"
+                  formControlName="rate"
+                  min="1"
+                  max="5"
+                  class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 font-medium outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                />
+              </div>
+              @if (reviewForm.get('rate')?.invalid && reviewForm.get('rate')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  La note doit être comprise entre 1 et 5.
+                </div>
+              }
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-slate-800 mb-2">Votre commentaire</label>
+              <textarea
+                formControlName="comment"
+                rows="4"
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 font-medium outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none"
+                placeholder="Partagez votre expérience avec ce modèle..."
+              ></textarea>
+              @if (reviewForm.get('comment')?.invalid && reviewForm.get('comment')?.touched) {
+                <div class="text-red-500 text-sm mt-1">
+                  Le commentaire doit contenir au moins 5 caractères.
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="mt-8 flex justify-end gap-3">
+            <button
+              type="button"
+              class="px-5 py-2.5 rounded-xl font-bold text-slate-600 hover:bg-slate-100 transition-colors"
+              (click)="closeReviewModal()"
+              [disabled]="reviewSubmitting"
+            >
+              Annuler
+            </button>
+            <button
+              type="submit"
+              class="px-5 py-2.5 rounded-xl font-bold text-white bg-primary hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center gap-2"
+              [disabled]="reviewForm.invalid || reviewSubmitting"
+            >
+              @if (reviewSubmitting) {
+                <span class="spinner-mini" style="border-top-color: white; width: 16px; height: 16px"></span>
+              }
+              Publier l'avis
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

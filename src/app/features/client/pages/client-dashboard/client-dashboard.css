@@ -1,7 +1,7 @@
-/* Client dashboard uses global Tailwind styles */
-
 .spinner-mini {
   display: inline-block;
+  width: 20px;
+  height: 20px;
   border: 3px solid rgba(127, 19, 236, 0.2);
   border-top-color: var(--primary, #7f13ec);
   border-radius: 50%;
@@ -9,7 +9,5 @@
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
